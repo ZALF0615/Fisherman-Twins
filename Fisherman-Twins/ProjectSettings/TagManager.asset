@@ -7,6 +7,9 @@ TagManager:
   - HighObstacle
   - LowObstacle
   - LevelParent
+  - net
+  - Fish
+  - Obstacle
   layers:
   - Default
   - TransparentFX
