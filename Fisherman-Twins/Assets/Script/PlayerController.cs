@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(DamageAnim());
 
-        if (net_left == 0) { GC.GameOver(); }
+        if (net_left <= 0) { GC.GameOver(); }
     }
 
     IEnumerator DamageAnim()
@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!isInitialized) { return; }
+        if (!GC.isGameOngoing) { return; }
 
         if (IsStun())
         {

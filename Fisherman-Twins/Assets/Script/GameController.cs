@@ -30,10 +30,10 @@ public class GameController : MonoBehaviour
         instance = this;
     }
     #endregion INSTANCE
-
+    
     #region PARAM
 
-    bool isGameOngoing;
+    public bool isGameOngoing;
 
     public GameObject player;
 
@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         isGameOngoing = false;
+        uiScript.GameOver();
     }
 
 
