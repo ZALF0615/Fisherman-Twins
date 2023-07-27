@@ -75,11 +75,22 @@ public class RiverGenerator : MonoBehaviour
         Destroy(oldBlock);
     }
 
-    void Start()
+    private void Awake()
     {
+        Constants.OnConstantsLoaded += Init;
+    }
+
+    private bool isInitialized = false;
+    void Init()
+    {
+        if (isInitialized) { return; }
+
         currentBlockIdx = startBlockIdx - 1;
         UpdateBlock(preInstantiateNum);
+
+        isInitialized = true;
     }
+
     void Update()
     {
         // 캐릭터 위치에서부터 현재 블록까지의 인덱스를 계산

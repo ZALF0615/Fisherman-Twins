@@ -1431,7 +1431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 2122621192}
-  uiScript: {fileID: 0}
+  uiScript: {fileID: 943301522}
   player: {fileID: 1903603987}
   BGM: {fileID: 190517526}
   SE: {fileID: 1495592023}
@@ -2374,8 +2374,14 @@ MonoBehaviour:
   playerParent: {fileID: 1903603988}
   boat1: {fileID: 1513280544}
   boat2: {fileID: 483242906}
+  speedX: 15
+  speedZ: 20
   gold_total: 0
   gold_net: 0
   weight: 0
   net_left: 0
   distance: 0
+  raiseTime1p: 0
+  raiseTime2p: 0
+  up1p: 0
+  up2p: 0

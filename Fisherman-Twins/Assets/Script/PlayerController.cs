@@ -155,17 +155,30 @@ public class PlayerController : MonoBehaviour
     #endregion EVENT
 
     #region RUNTIME
+
+    private void Awake() { Constants.OnConstantsLoaded += Init; }
+
     void Start()
     {
         GC = GameController.GetInstance();
 
-        net_left = DEFAULT_NET_NUM;
-
         anim_boat1 = boat1.GetComponent<Animator>();
         anim_boat2 = boat2.GetComponent<Animator>();
     }
+    
+    private bool isInitialized = false;
+    void Init()
+    {
+        if (isInitialized) { return; }
+
+        net_left = DEFAULT_NET_NUM;
+        isInitialized = true;
+    }
+
     void Update()
     {
+        if (!isInitialized) { return; }
+
         if (IsStun())
         {
             recoverTime -= Time.deltaTime;
