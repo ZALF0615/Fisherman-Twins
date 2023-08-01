@@ -230,7 +230,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 8, y: 9, z: -10, w: 7}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: 7.511647e+33}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -320,8 +320,11 @@ MonoBehaviour:
   blockPrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   fishPrefabs:
-  - {fileID: 7918280023522824027, guid: d67d0e5f914a700469086293b79535e6, type: 3}
   - {fileID: 7075263776405250124, guid: 6f3020d2cd0ccfc46ab73acf1fe639af, type: 3}
+  - {fileID: 7918280023522824027, guid: 0efa72d51a568a140adf29fcb6f77422, type: 3}
+  - {fileID: 7918280023522824027, guid: a536092d3cc3bc64ba6299f56fee2742, type: 3}
+  - {fileID: 7918280023522824027, guid: 417dedeac4f21c04cbd79249949f5ae8, type: 3}
+  - {fileID: 7918280023522824027, guid: d5809261b64dd9948a8b634516afbfd4, type: 3}
   startBlockIdx: 1
   preInstantiateNum: 3
 --- !u!1 &190517525
@@ -653,7 +656,7 @@ MonoBehaviour:
     m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'N: -/-'
@@ -1013,7 +1016,7 @@ MonoBehaviour:
     m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'G: -'
@@ -1179,7 +1182,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: '- m'
@@ -1432,6 +1435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 2122621192}
   uiScript: {fileID: 943301522}
+  isGameOngoing: 0
   player: {fileID: 1903603987}
   BGM: {fileID: 190517526}
   SE: {fileID: 1495592023}
@@ -2097,7 +2101,7 @@ MonoBehaviour:
     m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'W: -/-'
@@ -2385,3 +2389,8 @@ MonoBehaviour:
   raiseTime2p: 0
   up1p: 0
   up2p: 0
+  bulletPrefab: {fileID: 8298936380257934627, guid: e15854dac0e68104b90bf91fe688e711,
+    type: 3}
+  firePoint1: {fileID: 1513280550}
+  firePoint2: {fileID: 483242912}
+  bulletSpeed: 50

@@ -65,7 +65,7 @@ public static class Constants
                 string key = cells[0].Trim('"');   
                 float value = float.Parse(cells[1].Trim('"'));
 
-                Debug.Log("Key: " + key + ", Value: " + value);  // 여기서 로그를 출력합니다.
+                // Debug.Log("Key: " + key + ", Value: " + value);  // 여기서 로그를 출력합니다.
 
                 switch (key)
                 {

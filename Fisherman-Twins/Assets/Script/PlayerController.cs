@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public float speedX = 15;
     public float speedZ = 20;
 
-    public int gold_total, gold_net;
-    public int weight;
+    public float gold_total, gold_net;
+    public float weight;
     public int net_left;
 
     public float distance;
@@ -110,11 +110,29 @@ public class PlayerController : MonoBehaviour
 
     #endregion NET
 
+    #region BULLET
+    public GameObject bulletPrefab; // 총알 프리팹
+    public Transform firePoint1; // 플레이어 1의 발사 위치
+    public Transform firePoint2; // 플레이어 2의 발사 위치
+    public float bulletSpeed = 50f; // 총알 속도
+
+    void FireBullet(Vector3 firePosition)
+    {
+        // 총알 생성 및 초기 위치 설정
+        GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+        // 총알 속도 설정
+        bulletScript.speed = speedZ +  bulletSpeed;
+    }
+
+    #endregion BULLET
+
     #region EVENT
 
     bool damageOngoing;
 
-    public void GetFish(int p, int w)
+    public void GetFish(float p, float w)
     {
         gold_net += p;
         weight += w;
@@ -197,23 +215,11 @@ public class PlayerController : MonoBehaviour
             LocateNet();
 
             // 그물 들어올리는 판정
-
-            if (up1p)
-            {
-                raiseTime1p -= Time.deltaTime;
-                if(raiseTime1p <= 0) { up1p = false; raiseTime1p = 0; }
-            }
-            if (up2p)
-            {
-                raiseTime2p -= Time.deltaTime;
-                if (raiseTime2p <= 0) { up2p = false; raiseTime2p = 0; }
-            }
-
             if (up1p) { raiseTime1p -= Time.deltaTime; up1p = raiseTime1p > 0; }
             if (up2p) { raiseTime2p -= Time.deltaTime; up2p = raiseTime2p > 0; }
 
-            if (Input.GetButtonDown("Player1Up")) { up1p = true; raiseTime1p = RAISE_DIFF; }
-            if (Input.GetButtonDown("Player2Up")) { up2p = true; raiseTime2p = RAISE_DIFF; }
+            if (Input.GetButtonDown("Player1Raise")) { up1p = true; raiseTime1p = RAISE_DIFF; }
+            if (Input.GetButtonDown("Player2Raise")) { up2p = true; raiseTime2p = RAISE_DIFF; }
 
             if (up1p && up2p)
             {
@@ -222,6 +228,10 @@ public class PlayerController : MonoBehaviour
                 up1p = up2p = false;
                 raiseTime1p = raiseTime2p = 0;
             }
+
+            // 총알 발사
+            if (Input.GetButtonDown("Player1Fire")) { FireBullet(firePoint1.position); }
+            if (Input.GetButtonDown("Player2Fire")) { FireBullet(firePoint2.position); }
         }
 
         distance = transform.position.z / 20f;
