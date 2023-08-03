@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
   m_FogMode: 2
   m_FogDensity: 0.03
@@ -230,7 +230,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: 7.511647e+33}
+  m_BoundingSphereOverride: {x: 6.03e-43, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -320,11 +320,12 @@ MonoBehaviour:
   blockPrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   fishPrefabs:
-  - {fileID: 7075263776405250124, guid: 6f3020d2cd0ccfc46ab73acf1fe639af, type: 3}
-  - {fileID: 7918280023522824027, guid: 0efa72d51a568a140adf29fcb6f77422, type: 3}
+  - {fileID: 1689892608009186, guid: 58081812eb0a85441ac9088c4f249c54, type: 3}
+  - {fileID: 7918280023522824027, guid: 42d81472acb0a564f8df24e7452ae1ff, type: 3}
+  - {fileID: 7918280023522824027, guid: 417dedeac4f21c04cbd79249949f5ae8, type: 3}
   - {fileID: 7918280023522824027, guid: a536092d3cc3bc64ba6299f56fee2742, type: 3}
   - {fileID: 7918280023522824027, guid: 417dedeac4f21c04cbd79249949f5ae8, type: 3}
-  - {fileID: 7918280023522824027, guid: d5809261b64dd9948a8b634516afbfd4, type: 3}
+  - {fileID: 7918280023522824027, guid: 2bb5fcfa5b8e8a44a9ff6c53c587be06, type: 3}
   startBlockIdx: 1
   preInstantiateNum: 3
 --- !u!1 &190517525
@@ -492,7 +493,7 @@ Camera:
   m_GameObject: {fileID: 282840810}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -508,7 +509,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -533,14 +534,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282840810}
-  m_LocalRotation: {x: 0.13888669, y: -0, z: -0, w: 0.9903083}
-  m_LocalPosition: {x: 0, y: 3.5, z: -5.13}
+  m_LocalRotation: {x: 0.12576613, y: 0, z: 0, w: 0.9920599}
+  m_LocalPosition: {x: 0, y: 3.5, z: -4.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 15.967, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14.45, y: 0, z: 0}
 --- !u!114 &282840815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2379,7 +2380,7 @@ MonoBehaviour:
   boat1: {fileID: 1513280544}
   boat2: {fileID: 483242906}
   speedX: 15
-  speedZ: 20
+  speedZ: 15
   gold_total: 0
   gold_net: 0
   weight: 0

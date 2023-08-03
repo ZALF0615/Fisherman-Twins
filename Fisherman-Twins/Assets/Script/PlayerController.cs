@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     public float speedX = 15;
     public float speedZ = 20;
 
-    public float gold_total, gold_net;
+    public int gold_total;
+    public float gold_net;
     public float weight;
     public int net_left;
 
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     }
     void BoatMove()
     {
+        if (damageOngoing) { return; }
+
         // 플레이어 1 (왼쪽 플레이어)
         float moveHorizontal = Input.GetAxis("Player1Horizontal");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour
     }
     void RaiseNet()
     {
-        gold_total += gold_net;
+        gold_total += (int)(gold_net + 0.5f);
         gold_net = 0;
 
         weight = 0;
@@ -89,11 +92,17 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.tag == "Fish")
         {
             var fish = other.GetComponent<FishScript>();
-            GetFish(fish.price, fish.weight);
+            if (!fish.isBad) // 좋은 물고기
+            {
+                GetFish(fish.price, fish.weight);
+            }
+            else // 나쁜 물고기
+            {
+                BadFish(fish.fishIdx);
+            }
 
             var getSound = fish.getSound;
             GC.PlaySE(getSound);
-
             Destroy(other.gameObject);
         }
         else if(other.gameObject.tag == "Obstacle")
@@ -138,6 +147,15 @@ public class PlayerController : MonoBehaviour
         weight += w;
 
         if (weight > MAX_NET_WEIGHT) { Damage(); }
+    }
+    public void BadFish(int idx)
+    {
+        switch (idx)
+        {
+            case 27: // 복어
+                Damage();
+                break;
+        }
     }
     public void Obstacle(int idx)
     {
