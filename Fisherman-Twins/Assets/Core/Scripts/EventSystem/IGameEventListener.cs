@@ -1,4 +1,4 @@
-namespace HyperCasual.Core
+﻿namespace HyperCasual.Core
 {
     /// <summary>
     /// All classes that want to subscribe to an event must implement this interface   

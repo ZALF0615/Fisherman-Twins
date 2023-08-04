@@ -1,29 +1,36 @@
+ï»¿/*
+ * Bullet.cs
+ * 
+ * ì´ì•Œ(ì‘ì‚´) í”„ë¦¬íŒ¹ì— ë¶€ì—¬ 
+ * 
+ */
+
 using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float speed;
-    public float lifetime = 5f; // ÃÑ¾ËÀÌ ÀÚµ¿À¸·Î ÆÄ±«µÇ±â±îÁöÀÇ ½Ã°£
+    public float lifetime = 5f; // ì´ì•Œì´ ìë™ìœ¼ë¡œ íŒŒê´´ë˜ê¸°ê¹Œì§€ì˜ ì‹œê°„
 
     void Start()
     {
-        // ÀÏÁ¤ ½Ã°£ ÈÄ ÃÑ¾Ë ÆÄ±«
+        // ì¼ì • ì‹œê°„ í›„ ì´ì•Œ íŒŒê´´
         Destroy(gameObject, lifetime);
     }
 
     void Update()
     {
-        // ÃÑ¾Ë ÀÌµ¿
+        // ì´ì•Œ ì´ë™
         transform.position += transform.forward * speed * Time.deltaTime;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // "Fish" ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®¿ÍÀÇ Ãæµ¹ °Ë»ç
+        // "Fish" íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ì™€ì˜ ì¶©ëŒ ê²€ì‚¬
         if (other.tag == "Fish")
         {
-            // ÃÑ¾Ë°ú ¹°°í±â ÆÄ±«
+            // ì´ì•Œê³¼ ë¬¼ê³ ê¸° íŒŒê´´
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

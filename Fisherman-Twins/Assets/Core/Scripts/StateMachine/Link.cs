@@ -1,4 +1,4 @@
-namespace HyperCasual.Core
+﻿namespace HyperCasual.Core
 {
     /// <summary>
     /// A link that is always open for transition.

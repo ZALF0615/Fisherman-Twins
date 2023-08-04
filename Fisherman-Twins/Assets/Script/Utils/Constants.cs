@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
@@ -62,10 +62,10 @@ public static class Constants
                 var line = lines[i];
                 var cells = line.Split(',');
 
-                string key = cells[0].Trim('"');   
+                string key = cells[0].Trim('"');
                 float value = float.Parse(cells[1].Trim('"'));
 
-                // Debug.Log("Key: " + key + ", Value: " + value);  // ¿©±â¼­ ·Î±×¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+                // Debug.Log("Key: " + key + ", Value: " + value);  // ì—¬ê¸°ì„œ ë¡œê·¸ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
 
                 switch (key)
                 {

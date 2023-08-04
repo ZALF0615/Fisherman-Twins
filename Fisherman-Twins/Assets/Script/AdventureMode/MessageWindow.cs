@@ -4,38 +4,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Text;
-using UnityEngine.SceneManagement;
-using System.IO;
 
 public class MessageWindow : MonoBehaviour
 {
+    // 메시지와 이름 텍스트 UI
     public Text messageText;
     public Text nameText;
+
+    // 메시지와 이름을 담는 패널
     public GameObject messagePanel;
     public GameObject namePanel;
 
+    // 패널과 버튼을 담는 배경 오브젝트
     public GameObject panelBG;
     public Button panelButton;
+
+    // 게임 오브젝트 창을 담는 오브젝트 창
     public GameObject ObjectWindow;
 
+    // 터치 패드와 커서 표시기
     public Button TouchPad;
     public GameObject CursorMarker;
 
+    // 오디오 소스들
     private AudioSource audioSource;
     public AudioSource SEPlayer;
 
-    public AudioSource SE_dice;
-    public AudioSource SE_select;
-    public AudioSource Happy;
-
-
+    // 캐릭터 이미지들과 위치 좌표들
     [SerializeField] private Image[] characterImages;
     private Dictionary<CharacterPosition, Vector3> positionCoordinates;
-    
+
+    // 스프라이트 캐시
     private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
+    // 구글 스프레드시트 ID
     private const string SHEET_ID = "1Gyz0EZX6HKQdqQ2-ZlDs4FbAoXeSgl1vGzVEVBgrerQ";
 
+    // 메시지 데이터 리스트와 현재 인덱스
     private List<MessageData> messages = new List<MessageData>();
     public int currentIndex = 0;
 
@@ -43,18 +48,11 @@ public class MessageWindow : MonoBehaviour
     private bool isPaused = false;
     private string remainingMessage;
 
-    // backLog
-
-    public GameObject backlogPanel; // BacklogPanelへの参照
-    private List<(string, string)> backlogEntries = new List<(string, string)>(); // バックログのデータを格納するリスト
-
-    public Transform contentTransform; // Contentオブジェクトへの参照
-    public GameObject backlogEntryPrefab; // バックログエントリのPrefabへの参照
-
     // loading
-
     // public GameObject loadingModal;
 
+
+    // 게임 로딩
     public void Init(int stageIdx)
     {
         StartCoroutine(Initialize(stageIdx));
@@ -62,37 +60,31 @@ public class MessageWindow : MonoBehaviour
 
     IEnumerator Initialize(int stageIdx)
     {
-        // loadingModal.SetActive(true);
-
-        // Load spreadsheet data
+        // 구글 스프레드시트 데이터 로드
         var loadData = LoadDataFromSpreadsheet(stageIdx);
         yield return StartCoroutine(loadData);
 
-        // Load sprites
+        // 스프라이트 로드
         var loadSprites = LoadCharacterSprites();
         yield return StartCoroutine(loadSprites);
 
-        // Set up positions
+        // 캐릭터 위치 설정
         positionCoordinates = new Dictionary<CharacterPosition, Vector3>
-    {
-        { CharacterPosition.None, Vector3.zero },
-        { CharacterPosition.L, characterImages[0].transform.position },
-        { CharacterPosition.R, characterImages[1].transform.position }
-    };
+        {
+            { CharacterPosition.None, Vector3.zero },
+            { CharacterPosition.L, characterImages[0].transform.position },
+            { CharacterPosition.R, characterImages[1].transform.position }
+        };
 
-        // Set up panel click event listener
+        // 패널 클릭 이벤트 리스너 설정
         TouchPad.onClick.AddListener(HandleClick);
         audioSource = gameObject.AddComponent<AudioSource>();
 
-
+        // 첫 번째 메시지 표시
         DisplayNextMessage();
-        // yield return new WaitForSeconds(0.7f);
-        //yield return StartCoroutine(FadeOutLoadingModal());
-
-        // Display first message
-
     }
 
+    // 캐릭터 스프라이트 로드
     private IEnumerator LoadCharacterSprites()
     {
         Sprite[] characterSprites = Resources.LoadAll<Sprite>("CharacterImages");
@@ -103,6 +95,8 @@ public class MessageWindow : MonoBehaviour
         }
         yield return null;
     }
+
+    // 구글 스프레드시트에서 데이터 로드
     private IEnumerator LoadDataFromSpreadsheet(int stageIdx)
     {
         string sheet_name = string.Format("scenario_stage_{0}", stageIdx);
@@ -123,6 +117,8 @@ public class MessageWindow : MonoBehaviour
         }
     }
 
+
+    // CSV 데이터를 파싱하여 메시지 데이터 리스트로 반환
     private List<MessageData> ParseDialogueData(string csvText)
     {
         var lines = csvText.Split('\n');
@@ -155,10 +151,6 @@ public class MessageWindow : MonoBehaviour
                 if (!string.IsNullOrEmpty(character))
                 {
                     var position = (CharacterPosition)(j - 3);
-                    // print("========================================");
-                    // print("speaker: " + speaker);
-                    // print("position.ToString().ToLower()n: " + position.ToString().ToLower());
-                    // print("========================================");
                     characters.Add(new CharacterData(character, position, speaker.Contains(position.ToString().ToUpper())));
                 }
             }
@@ -183,11 +175,13 @@ public class MessageWindow : MonoBehaviour
         return messages;
     }
 
+
+    // 다음 메시지 표시
     public void DisplayNextMessage()
     {
         if (currentSkipBranch != 0)
         {
-            // Skipping until branch end
+            // 분기 끝까지 스킵
             while (true)
             {
                 var nextMessage = messages[++currentIndex];
@@ -195,7 +189,7 @@ public class MessageWindow : MonoBehaviour
 
                 if (currentIndex >= messages.Count) 
                 {
-                    // End of script, can't find matching branch end
+                    // 스크립트 끝, 일치하는 분기 끝을 찾을 수 없음
                     currentSkipBranch = 0;
                     return;
                 }
@@ -204,7 +198,7 @@ public class MessageWindow : MonoBehaviour
 
                 if (parts[0] == "branch" && parts[2] == "end" && int.Parse(parts[1]) == currentSkipBranch)
                 {
-                    currentSkipBranch = 0; // Stop skipping
+                    currentSkipBranch = 0; // 스킵 중지
                     DisplayNextMessage();
                     break;
                 }
@@ -227,14 +221,14 @@ public class MessageWindow : MonoBehaviour
         }
         else
         {
+            // 모든 메시지를 다 표시했을 때, 패널과 이름 텍스트 비활성화
             messagePanel.SetActive(false);
             namePanel.SetActive(false);
         }
     }
 
-    public bool wasnone = false;
-    string beforeBGM = "";
 
+    // 메시지 표시 코루틴
     private IEnumerator DisplayMessageCoroutine(MessageData data)
     {
         isDisplaying = true;
@@ -243,6 +237,7 @@ public class MessageWindow : MonoBehaviour
         remainingMessage = data.Message;
         messageText.text = "";
 
+        // 캐릭터 이름이 없으면 이름 패널 비활성화
         if (string.IsNullOrEmpty(data.CharacterName))
         {
             namePanel.SetActive(false);
@@ -253,8 +248,7 @@ public class MessageWindow : MonoBehaviour
             namePanel.SetActive(true);
         }
 
-        // Object image change
-
+        // 오브젝트 이미지 변경
         if (!string.IsNullOrEmpty(data.ObjectImage))
         {
             ObjectWindow.GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>($"Objects/{data.ObjectImage}");
@@ -265,7 +259,7 @@ public class MessageWindow : MonoBehaviour
             ObjectWindow.SetActive(false);
         }
 
-        // SE Play
+        // SE 재생
         if (!string.IsNullOrEmpty(data.SE))
         {
             AudioClip clip = Resources.Load<AudioClip>($"SE/{data.SE}");
@@ -273,20 +267,19 @@ public class MessageWindow : MonoBehaviour
         }
 
 
-        // 立ち絵の更新
+        // 캐릭터 이미지 업데이트
         for (int i = 0; i < characterImages.Length; i++)
         {
             if (data.Characters != null && i < data.Characters.Count)
             {
                 CharacterData characterData = data.Characters[i];
 
-                // DictionaryからSpriteを取得
                 spriteCache.TryGetValue(characterData.ImageFilename, out Sprite characterSprite);
 
                 characterImages[i].sprite = characterSprite;
                 characterImages[i].transform.position = positionCoordinates[characterData.Position];
 
-                // 現在話しているキャラクターを強調
+                // 현재 말하고 있는 캐릭터를 강조
                 characterImages[i].color = characterData.IsActive ? Color.white : Color.gray;
 
                 characterImages[i].gameObject.SetActive(true);
@@ -312,26 +305,25 @@ public class MessageWindow : MonoBehaviour
             messageText.gameObject.SetActive(true);
             nameText.gameObject.SetActive(true);
 
-            // 文字を一文字ずつ表示
+            // 문자를 한 글자씩 표시
             for (int i = 0; i < data.Message.Length; i++)
             {
                 messageText.text += data.Message[i];
                 remainingMessage = remainingMessage.Substring(1);
 
-                // 文字ごとの表示速度を調整
+                // 문자마다의 표시 속도 조정
                 yield return new WaitForSeconds(0.05f);
             }
 
             CursorMarker.SetActive(true);
-            backlogEntries.Add((data.CharacterName, data.Message));
-
         }
 
         isDisplaying = false;
     }
 
 
-    // choice
+    // 선택지 처리 관련
+
     public GameObject choiceButtonPrefab;
     public GameObject choicePanel;
 
@@ -340,19 +332,14 @@ public class MessageWindow : MonoBehaviour
     public int currentBranch = 0;
     public int currentSkipBranch = 0;
 
-    //skip
-
     Dictionary<string, int> labelIndices = new Dictionary<string, int>();
 
-    // ED
-
-    public Text EDText;
-
+    // 시스템 코드 처리 함수
     bool ProcessSystemCode(string systemCode, string message)
     {
         var parts = systemCode.Split('/');
 
-        // jump
+        // 점프 (다른 레이블로 이동)
         if (parts[0] == "jump")
         {
             string labelName = parts[1];
@@ -366,20 +353,13 @@ public class MessageWindow : MonoBehaviour
             return true;
         }
 
-        // label
+        // 레이블
         if (parts[0] == "label")
         {
-
-            if(parts[1] == "alone")
-            {
-                Happy.Stop();
-            }
-
             return true;
         }
 
-        // pause
-
+        // 일시 정지
         if (parts[0] == "pause")
         {
             if (float.TryParse(parts[1], out float pauseSeconds))
@@ -388,101 +368,63 @@ public class MessageWindow : MonoBehaviour
             }
         }
 
-        // Choice
+        // 선택지
         choicePanel.SetActive(parts[0] == "choice");
 
         if (parts[0] == "choice")
         {
-            int idx1 = int.Parse(parts[1]);
-            int idx2 = int.Parse(parts[2]);
+            choicePanel.SetActive(true);
+            messagePanel.SetActive(false);
+            TouchPad.gameObject.SetActive(false);
 
-            if (choiceFlags.ContainsKey(1) && choiceFlags[1] && idx1 != 17)
+            foreach (Transform child in choicePanel.transform) { Destroy(child.gameObject); }
+
+            string[] choices = message.Split('/');
+            for (int i = 1; i < parts.Length; i++)
             {
-                // Roll Dice
+                int choiceIndex = int.Parse(parts[i]);
 
-                int forceIdx = Random.Range(0, 2) % 2 == 0 ? idx1 : idx2;
+                // 프리팹에서 버튼을 만들고 choicePanel의 자식으로 만듦
+                GameObject buttonObj = Instantiate(choiceButtonPrefab, choicePanel.transform);
+                Button button = buttonObj.GetComponent<Button>();
+                Text buttonText = buttonObj.GetComponentInChildren<Text>();
 
-                if (idx1 == 3 || idx1 == 5 || idx1 == 15) { forceIdx = idx1; }     
+                // 버튼 텍스트 설정
+                buttonText.text = choices[i - 1];
 
-                choiceFlags[forceIdx] = true;
-                print($"set radnom flag: {forceIdx}");
+                // 리스너 추가
+                button.GetComponent<Button>().onClick.AddListener(() => {
 
+                    choiceFlags[choiceIndex] = true; // 플래그 설정
+                    print($"set flag: {choiceIndex}");
 
-                SE_dice.Play();
-                StartCoroutine(PauseForSeconds(2f));
-            }
-            else
-            {
-                choicePanel.SetActive(true);
-                messagePanel.SetActive(false);
-                TouchPad.gameObject.SetActive(false);
+                    foreach (Transform child in choicePanel.transform) { Destroy(child.gameObject); }
 
-                foreach (Transform child in choicePanel.transform) { Destroy(child.gameObject); }
+                    choicePanel.gameObject.SetActive(false); // 선택지 패널 비활성화
+                    messagePanel.SetActive(true);
+                    TouchPad.gameObject.SetActive(true);
 
-                string[] choices = message.Split('/');
-                for (int i = 1; i < parts.Length; i++)
-                {
-                    int choiceIndex = int.Parse(parts[i]);
-
-                    // Create button from prefab and make it a child of choicePanel
-
-                    GameObject buttonObj = Instantiate(choiceButtonPrefab, choicePanel.transform);
-                    Button button = buttonObj.GetComponent<Button>();
-                    Text buttonText = buttonObj.GetComponentInChildren<Text>();
-
-                    // Set button text
-                    buttonText.text = choices[i - 1];
-
-                    // Add listener
-                    button.GetComponent<Button>().onClick.AddListener(() => {
-
-                        choiceFlags[choiceIndex] = true; // Set flag
-                        print($"set flag: {choiceIndex}");
-
-                        foreach (Transform child in choicePanel.transform) { Destroy(child.gameObject); }
-
-                        choicePanel.gameObject.SetActive(false); // Hide choicePanel
-                        messagePanel.SetActive(true);
-                        TouchPad.gameObject.SetActive(true);
-
-                        DisplayNextMessage();
-                    });
-                }
+                    DisplayNextMessage();
+                });
             }
 
             return true;
         }
 
-        else if (parts[0] == "check")
-        {
-            bool f7 = choiceFlags.ContainsKey(7) && choiceFlags[7];
-            bool f9 = choiceFlags.ContainsKey(9) && choiceFlags[9];
-
-            if (!f7 || !f9) {
-                choiceFlags[11] = true;
-                currentIndex = labelIndices["work"];
-            }
-
-            DisplayNextMessage();
-            return true;
-        }
-
-        // Branch start
+        // 분기 시작
         else if (parts[0] == "branch" && parts[2] == "start")
         {
             int branchIndex = int.Parse(parts[1]);
 
-        
-
             if (choiceFlags.ContainsKey(branchIndex) && choiceFlags[branchIndex])
             {
-                // branch 실행
+                // 해당 분기 실행
                 print($"Branch start: {branchIndex}");
                 currentBranch = branchIndex;
             }
             else
             {
-                // branch 스킵
+                // 해당 분기 스킵
                 print($"Branch skip: {branchIndex}");
                 currentSkipBranch = branchIndex;
             }
@@ -492,7 +434,7 @@ public class MessageWindow : MonoBehaviour
             return true;
         }
 
-        // Branch end
+        // 분기 종료
         else if (parts[0] == "branch" && parts[2] == "end" && int.Parse(parts[1]) == currentBranch)
         {
             currentBranch = 0;
@@ -520,58 +462,19 @@ public class MessageWindow : MonoBehaviour
 
         if (isDisplaying)
         {
-            // すべての文字を表示する
+            // 모든 문자를 한 번에 표시
             StopAllCoroutines();
             messageText.text = messageText.text + remainingMessage;
             isDisplaying = false;
         }
         else 
         {
-            // SE_select.Play();
+            // 다음 메시지 표시
             DisplayNextMessage(); 
         }
     }
 
-    public void ToggleBacklog()
-    {
-        backlogPanel.SetActive(!backlogPanel.activeSelf);
-
-        if (backlogPanel.activeSelf) { UpdateBacklogText(); }
-    }
-
-    private void UpdateBacklogText()
-    {
-        // 既存のエントリを削除
-        foreach (Transform child in contentTransform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        // 新しいエントリを追加
-        foreach (var entry in backlogEntries)
-        {
-            GameObject newEntry = Instantiate(backlogEntryPrefab, contentTransform);
-            Text nameText = newEntry.transform.GetComponentsInChildren<Text>()[0];
-            Text messageText = newEntry.transform.GetComponentsInChildren<Text>()[1];
-
-            string characterName = entry.Item1;
-            string message = entry.Item2;
-
-            // 名前がない場合は名前のテキストを非表示に
-            if (string.IsNullOrEmpty(characterName))
-            {
-                newEntry.transform.GetChild(0).gameObject.SetActive(false);
-            }
-            else
-            {
-                nameText.text = characterName;
-            }
-
-            messageText.text = message;
-        }
-    }
-
-
+    // 메시지 표시를 일시 정지하는 코루틴
     private IEnumerator PauseForSeconds(float seconds)
     {
         isPaused = true;
@@ -587,26 +490,6 @@ public class MessageWindow : MonoBehaviour
 
         DisplayNextMessage();
     }
-
-    //private IEnumerator FadeOutLoadingModal()
-    //{
-    // CanvasGroup canvasGroup = loadingModal.GetComponent<CanvasGroup>();
-
-    // フェードアウトの速さ
-    //float fadeSpeed = 2f;
-
-    // alphaを1から0にフェードアウト
-    // while (canvasGroup.alpha > 0f)
-    //{
-    //canvasGroup.alpha -= Time.deltaTime * fadeSpeed;
-    //yield return null;
-    // }
-
-    // フェードアウト後、モーダルを非アクティブにする
-    //loadingModal.SetActive(false);
-    // }
-    //[SerializeField]
-    // float fadeDuration = 1f; // フェードにかかる時間。Inspectorから変更可能。
 
     public class MessageData
     {
@@ -647,7 +530,7 @@ public class MessageWindow : MonoBehaviour
         }
     }
 
-
+    // 캐릭터 위치를 나타내는 enum. None은 위치가 지정되지 않은 경우
     public enum CharacterPosition { None, L, R }
 
     public static void PrintMessageData(MessageData messageData)
@@ -680,7 +563,7 @@ public class MessageWindow : MonoBehaviour
             }
         }
 
-        // 出力文字列をコンソールに表示
+        // 출력 문자열을 콘솔에 표시
         print(output.ToString());
     }
 

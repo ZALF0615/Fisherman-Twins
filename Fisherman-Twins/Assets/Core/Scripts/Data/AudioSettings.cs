@@ -1,4 +1,4 @@
-namespace HyperCasual.Core
+﻿namespace HyperCasual.Core
 {
     /// <summary>
     /// Encapsulates audio settings parameters

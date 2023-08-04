@@ -1,10 +1,17 @@
+﻿/*
+ * UIManager.cs
+ * 
+ * 게임 진행 시 스코어 등의 UI를 관리하는 파일
+ * 
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static Constants;
 
-public class UIScript : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     GameController GC;
     PlayerController PC;

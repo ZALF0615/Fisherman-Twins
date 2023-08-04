@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 180068587}
   - component: {fileID: 180068588}
   m_Layer: 0
-  m_Name: RiverParent
+  m_Name: TileParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,9 +316,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1903603988}
-  blockParent: {fileID: 180068587}
-  blockPrefabs:
-  - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
+  tileParent: {fileID: 180068587}
+  tilePrefabs:
+  - {fileID: 1325131842}
   fishPrefabs:
   - {fileID: 1689892608009186, guid: 58081812eb0a85441ac9088c4f249c54, type: 3}
   - {fileID: 7918280023522824027, guid: 16e2f073f35b428478f2e0d3e70ff15a, type: 3}
@@ -326,7 +326,7 @@ MonoBehaviour:
   - {fileID: 7918280023522824027, guid: a536092d3cc3bc64ba6299f56fee2742, type: 3}
   - {fileID: 7918280023522824027, guid: 417dedeac4f21c04cbd79249949f5ae8, type: 3}
   - {fileID: 7918280023522824027, guid: d5809261b64dd9948a8b634516afbfd4, type: 3}
-  startBlockIdx: 1
+  startTileIdx: 0
   preInstantiateNum: 3
 --- !u!1 &190517525
 GameObject:
@@ -1512,10 +1512,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9735a8a9d27227945985467d970dc029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiScript: {fileID: 943301522}
   isGameOngoing: 0
+  uiScript: {fileID: 943301522}
   player: {fileID: 2122621192}
-  riverGenerator: {fileID: 180068588}
+  tileGenerator: {fileID: 180068588}
   BGM: {fileID: 190517526}
   SE: {fileID: 1495592023}
   isAdventureMode: 0
@@ -1740,6 +1740,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
+--- !u!1 &1325131842 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1325131841}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1369536593
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,23 +2351,15 @@ MonoBehaviour:
   TouchPad: {fileID: 1044560854128456243}
   CursorMarker: {fileID: 8602038363472595234}
   SEPlayer: {fileID: 1495592023}
-  SE_dice: {fileID: 0}
-  SE_select: {fileID: 0}
-  Happy: {fileID: 0}
   characterImages:
   - {fileID: 8620147497749540404}
   - {fileID: 8620147497180542802}
   currentIndex: 0
-  backlogPanel: {fileID: 0}
-  contentTransform: {fileID: 0}
-  backlogEntryPrefab: {fileID: 0}
-  wasnone: 0
   choiceButtonPrefab: {fileID: 2542339593567034762, guid: 5d9a9ef7fcdcab3458a59768b540a101,
     type: 3}
   choicePanel: {fileID: 1396385013162056877}
   currentBranch: 0
   currentSkipBranch: 0
-  EDText: {fileID: 0}
 --- !u!1 &2081119840
 GameObject:
   m_ObjectHideFlags: 0

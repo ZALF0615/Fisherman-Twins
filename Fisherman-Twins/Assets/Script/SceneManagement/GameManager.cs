@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
         catch
         {
-            Debug.LogError("Á¤ÀÇµÇÁö ¾ÊÀº °ÔÀÓ ½ÅÀÔ´Ï´Ù.");
+            Debug.LogError("ì •ì˜ë˜ì§€ ì•Šì€ ê²Œì„ ì‹ ì…ë‹ˆë‹¤.");
         }
 
     }
