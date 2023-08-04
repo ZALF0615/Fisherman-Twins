@@ -8,12 +8,14 @@ public class TitleScript : MonoBehaviour
     public AudioSource BGMPlayer;
     public AudioSource SEPlayer;
 
+
+
     private void Update()
     {
         if (Input.anyKeyDown)
         {
             SEPlayer.Play();
-            SceneManager.LoadScene("MainLobbyScene");
+            GameManager.LoadScene(GameScene.MainLobby);
         }
     }
 }

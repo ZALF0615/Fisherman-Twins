@@ -9,6 +9,8 @@ public class UIScript : MonoBehaviour
     GameController GC;
     PlayerController PC;
 
+    public Transform scoreUI;
+
     public Text goldText;
     public Text weightText;
     public Text netText;
@@ -16,6 +18,8 @@ public class UIScript : MonoBehaviour
 
     public GameObject gameOverPanel;
     public Text scoreText;
+
+    public bool isUIOn = true;
 
     public void GameOver()
     {
@@ -27,7 +31,12 @@ public class UIScript : MonoBehaviour
     private void Start()
     {
         GC = GameController.GetInstance();
-        PC = GC.playerController;
+        PC = GC.player;
+    }
+
+    public void SetUIActive(bool val)
+    {
+        scoreUI.gameObject.SetActive(val);
     }
 
     private void Update()
@@ -42,6 +51,5 @@ public class UIScript : MonoBehaviour
         netText.text = string.Format("Net: {0}/{1}", PC.net_left, DEFAULT_NET_NUM);
         var distance = PC.distance;
         distanceText.text = string.Format("{0} m", distance.ToString("0.0"));
-
     }
 }

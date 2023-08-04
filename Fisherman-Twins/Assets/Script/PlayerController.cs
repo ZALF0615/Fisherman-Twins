@@ -19,11 +19,13 @@ public class PlayerController : MonoBehaviour
     public float speedZ = 20;
 
     public int gold_total;
-    public float gold_net;
+    public int gold_net;
     public float weight;
+
     public int net_left;
 
     public float distance;
+    public float distanceOffset = 0f;
 
     float recoverTime = 0.0f;
     public float raiseTime1p, raiseTime2p = 0.0f;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     #endregion PARAM
 
     #region PLAYER CONTROLL
+
     bool IsStun()
     {
         return false;
@@ -74,13 +77,17 @@ public class PlayerController : MonoBehaviour
     #endregion PLAYER
 
     #region NET
+
+    public float netWidth;
+    public float netX;
+
     void LocateNet()
     {
         var x1 = boat1.transform.position.x;
         var x2 = boat2.transform.position.x;
 
-        var netWidth = (x2 - x1);
-        var netX = (x1 + x2) / 2.0f;
+        netWidth = (x2 - x1);
+        netX = (x1 + x2) / 2.0f;
 
         transform.localScale = new Vector3(netWidth, transform.localScale.y, transform.localScale.z);
         transform.position = new Vector3(netX, transform.position.y, transform.position.z);
@@ -141,10 +148,10 @@ public class PlayerController : MonoBehaviour
 
     bool damageOngoing;
 
-    public void GetFish(float p, float w)
+    public void GetFish(int _price, float _weight)
     {
-        gold_net += p;
-        weight += w;
+        gold_net += _price;
+        weight += _weight;
 
         if (weight > MAX_NET_WEIGHT) { Damage(); }
     }
@@ -203,6 +210,7 @@ public class PlayerController : MonoBehaviour
     }
     
     private bool isInitialized = false;
+
     void Init()
     {
         if (isInitialized) { return; }
@@ -210,9 +218,23 @@ public class PlayerController : MonoBehaviour
         net_left = DEFAULT_NET_NUM;
         isInitialized = true;
     }
+    public void GameStart()
+    {
+        if(GameManager.currentScene == GameScene.GameScene_Adventure)
+        {
+            // distanceOffset = distance;
+        }
+
+    }
 
     void Update()
     {
+        // 플레이어 z방향으로 전진
+        var newZ = playerParent.transform.position.z + speedZ * Time.deltaTime;
+        playerParent.transform.position = new Vector3(0, 0, newZ);
+
+        distance = (transform.position.z / 20f) - distanceOffset;
+
         if (!isInitialized) { return; }
         if (!GC.isGameOngoing) { return; }
 
@@ -222,9 +244,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // 플레이어 z방향으로 전진
-            var newZ = playerParent.transform.position.z + speedZ * Time.deltaTime;
-            playerParent.transform.position = new Vector3(0, 0, newZ);
 
             // 플레이어 x 방향 이동
             BoatMove();
@@ -247,12 +266,10 @@ public class PlayerController : MonoBehaviour
                 raiseTime1p = raiseTime2p = 0;
             }
 
-            // 총알 발사
+            // 작살 발사
             if (Input.GetButtonDown("Player1Fire")) { FireBullet(firePoint1.position); }
             if (Input.GetButtonDown("Player2Fire")) { FireBullet(firePoint2.position); }
         }
-
-        distance = transform.position.z / 20f;
     }
     #endregion RUNTIME
 }

@@ -46,7 +46,7 @@ public class RiverGenerator : MonoBehaviour
 
         blockObj.transform.SetParent(blockParent);
 
-        if (blockIdx > 1)
+        if (blockIdx > 1 && GameController.GetInstance().isGameOngoing)
         {
             // 오브젝트 생성
 
@@ -58,6 +58,8 @@ public class RiverGenerator : MonoBehaviour
 
                 var posX = Random.Range(FISH_MARGIN - RIVER_WIDTH / 2.0f, RIVER_WIDTH / 2.0f - FISH_MARGIN);
                 var posZ = Random.Range(BLOCK_SIZE / -2.0f, BLOCK_SIZE / 2.0f);
+
+                // print("fishIdx: " + fishIdx + ", posX: " + posX + ", posZ: " + posZ);
 
                 var fish = (GameObject)Instantiate(fishPrefabs[fishIdx]);
                 fish.transform.SetParent(blockObj.transform);
@@ -75,13 +77,8 @@ public class RiverGenerator : MonoBehaviour
         Destroy(oldBlock);
     }
 
-    private void Awake()
-    {
-        Constants.OnConstantsLoaded += Init;
-    }
-
     private bool isInitialized = false;
-    void Init()
+    public void Init()
     {
         if (isInitialized) { return; }
 
@@ -90,6 +87,8 @@ public class RiverGenerator : MonoBehaviour
 
         isInitialized = true;
     }
+
+    private void Awake() { Constants.OnConstantsLoaded += Init; }
 
     void Update()
     {
@@ -102,5 +101,4 @@ public class RiverGenerator : MonoBehaviour
             UpdateBlock(charaPositionIdx + preInstantiateNum);
         }
     }
-
 }
