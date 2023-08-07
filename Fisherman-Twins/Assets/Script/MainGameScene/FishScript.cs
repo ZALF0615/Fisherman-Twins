@@ -69,6 +69,18 @@ public class FishScript : MonoBehaviour
                 width = 2f;
                 speedZ = -0.6f;
                 break;
+            case 21: // 엔젤피쉬
+                price = 6;
+                weight = 0.3f;
+                width = 1.0f;
+                speedZ = -1.5f;
+                break;
+            case 27: // 복어
+                price = 0;
+                weight = 0f;
+                width = 1.5f;
+                speedZ = -0.6f;
+                break;
                 // 나머지 물고기도 여기에 추가...
         }
 
@@ -82,6 +94,7 @@ public class FishScript : MonoBehaviour
             anim.Play(animationName, 0, Random.Range(0.0f, 1.0f)); // 시작 시간을 0과 1 사이의 랜덤한 값으로 설정
         }
 
+        originalScale = transform.localScale.x; // 원래의 스케일을 저장
     }
 
     // 물고기의 특수한 행동을 구현하는 함수
@@ -94,6 +107,9 @@ public class FishScript : MonoBehaviour
                 break;
             case 15: // 송어
                 AvoidNet(10f, 10f); // 그물을 기피 (그물에서 멀어짐)
+                break;
+            case 27: // 복어
+                InflateNearNet(10f, 3f, 2f);
                 break;
                 // 나머지 물고기도 여기에 추가...
         }
@@ -157,7 +173,9 @@ public class FishScript : MonoBehaviour
     }
 
     private bool hasStartedInflating = false;  // 부풀어오르기 시작한 적이 있는지를 나타내는 변수
-    void InflateNearNet(float inflateDistance, float inflateSpeed, float maxScale)
+    float originalScale; // 원래의 스케일을 저장할 변수
+
+    void InflateNearNet(float inflateDistance, float inflateSpeed, float maxScaleRatio)
     {
         // 물고기와 그물 사이의 거리를 계산
         float distanceToNet = Vector3.Distance(transform.position, net.transform.position);
@@ -169,7 +187,7 @@ public class FishScript : MonoBehaviour
             hasStartedInflating = true;
 
             // 부풀어 오르도록 스케일을 점차적으로 증가
-            float newScale = Mathf.Min(transform.localScale.x + inflateSpeed * Time.deltaTime, maxScale);
+            float newScale = Mathf.Min(transform.localScale.x + inflateSpeed * Time.deltaTime, originalScale * maxScaleRatio);
             transform.localScale = new Vector3(newScale, newScale, newScale);
         }
     }
