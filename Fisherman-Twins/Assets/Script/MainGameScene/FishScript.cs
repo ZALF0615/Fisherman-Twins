@@ -15,12 +15,11 @@ public class FishScript : MonoBehaviour
     public int fishIdx; // 물고기 인덱스
     public bool isBad; // 나쁜 물고기인지 여부
 
-
     [SerializeField]
-    public string fishName; // 물고기 이름
+
     public int price; // 물고기 가격
     public float weight; // 물고기 무게
-
+    public float width; // 물고기 너비
     public float speedZ; // 물고기의 z방향 속도
 
     public AudioClip getSound; // 물고기를 잡았을 때의 소리
@@ -29,42 +28,38 @@ public class FishScript : MonoBehaviour
     #endregion PARAM
 
     // fishIdx에 따른 물고기 특성 초기화
+    // 현재는 수동으로 입력, 추후에 스프레드 시트 데이터 받아오는 식으로 변경
     public void Initialize()
     {
         switch (fishIdx)
         {
             case 11: // 멸치
-                fishName = "멸치";
-                weight = 0.2f;
                 price = 3;
+                weight = 0.2f;
+                width = 1.0f;
                 speedZ = -1.5f;
                 break;
             case 12: // 날치
-                fishName = "날치";
                 weight = 0.5f;
                 price = 7;
                 speedZ = -1.25f;
                 break;
             case 13: // 가재
-                fishName = "가재";
-                weight = 2.0f;
+                 weight = 2.0f;
                 price = 18;
                 speedZ = -0.7f;
                 break;
             case 14: // 은어
-                fishName = "은어";
                 weight = 4.0f;
                 price = 20;
                 speedZ = -1.2f;
                 break;
             case 15: // 송어
-                fishName = "송어";
                 weight = 7.0f;
                 price = 56;
                 speedZ = -0.9f;
                 break;
             case 16: // 연어
-                fishName = "연어";
                 weight = 10.0f;
                 price = 80;
                 speedZ = -0.6f;
