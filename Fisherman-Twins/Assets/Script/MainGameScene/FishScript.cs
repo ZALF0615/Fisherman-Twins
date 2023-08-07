@@ -50,8 +50,9 @@ public class FishScript : MonoBehaviour
                 speedZ = -0.7f;
                 break;
             case 14: // 은어
-                weight = 4.0f;
                 price = 20;
+                weight = 4.0f;
+                width = 1.5f;
                 speedZ = -1.2f;
                 break;
             case 15: // 송어
@@ -85,10 +86,10 @@ public class FishScript : MonoBehaviour
             case 13: // 가재
                 break;
             case 14: // 은어
-                MoveTowardNet(10f, 3f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 15: // 송어
-                AvoidNet(10f, 1.5f); // 그물을 기피 (그물에서 멀어짐)
+                AvoidNet(10f, 10f); // 그물을 기피 (그물에서 멀어짐)
                 break;
             case 16: // 연어
                 // 연어의 행동 구현
@@ -112,8 +113,10 @@ public class FishScript : MonoBehaviour
 
         if (zDistoNet < startDistance) // 일정 범위 안에서만 그물 감지
         {
-            // 물고기와 그물 사이의 수평방향(X) 거리가 그물 길이의 25% 이하일 경우 (그물 범위 가운데 50% 안쪽)
-            if (xDistoNet <= 0.5f * 0.5f * netWidth)
+            var a = 20;
+
+            // 물고기와 그물 사이의 수평방향(X) 거리가 그물 길이의 0.5a% 이하일 경우 (그물 범위 가운데 a% 안쪽)
+            if (xDistoNet <= 0.005* a * 0.5f * netWidth)
             {
                 // 그대로 직진 (X방향 이동 없음)
             }
