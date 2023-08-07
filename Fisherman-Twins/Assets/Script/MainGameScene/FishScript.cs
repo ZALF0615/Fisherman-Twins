@@ -55,8 +55,9 @@ public class FishScript : MonoBehaviour
                 speedZ = -1.2f;
                 break;
             case 15: // 송어
-                weight = 7.0f;
                 price = 56;
+                weight = 7.0f;
+                width = 1.75f;
                 speedZ = -0.9f;
                 break;
             case 16: // 연어
@@ -66,6 +67,8 @@ public class FishScript : MonoBehaviour
                 break;
                 // 나머지 물고기도 여기에 추가...
         }
+
+        transform.localScale *= width;
 
     }
 
@@ -85,7 +88,7 @@ public class FishScript : MonoBehaviour
                 MoveTowardNet(10f, 3f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 15: // 송어
-                MoveTowardNet(10f, -1.5f); // 그물을 기피 (그물에서 멀어짐)
+                AvoidNet(10f, 1.5f); // 그물을 기피 (그물에서 멀어짐)
                 break;
             case 16: // 연어
                 // 연어의 행동 구현
@@ -96,6 +99,9 @@ public class FishScript : MonoBehaviour
 
     #region FEATURES
 
+    // 그물 방향으로 이동
+    // 시작거리 바깥에서는 작동 안함
+    // 시작거리 안쪽에서는, 그물 범위 바깥에 있으면 그물 중심 방향으로 이동, 그물 범위 안쪽이면 직진 이동
     void MoveTowardNet(float startDistance, float speedMultiplier)
     {
 
@@ -115,6 +121,32 @@ public class FishScript : MonoBehaviour
             {
                 float directionToNet = Mathf.Sign(net.position.x - transform.position.x); // 그물의 x 좌표 방향을 계산
                 transform.position += new Vector3(directionToNet * speedMultiplier * Time.deltaTime, 0, 0); // 그물의 x 좌표 방향으로 이동
+            }
+        }
+
+    }
+
+    // 그물 기피
+    void AvoidNet(float startDistance, float speedMultiplier)
+    {
+        var xDistoNet = Mathf.Abs(transform.position.x - net.transform.position.x); //  물고기와 그물 사이의 수평방향(X) 거리
+        var zDistoNet = Mathf.Abs(transform.position.z - net.transform.position.z); //  물고기와 그물 사이의 수직방향(Z) 거리
+
+        var netWidth = GameController.GetInstance().player.netWidth; // 현재 그물의 길이
+
+        if (zDistoNet < startDistance) // 일정 범위 안에서만 그물 감지
+        {
+            // 물고기와 그물 사이의 수평방향(X) 거리가 그물 길이의 25% 이하일 경우 (그물 범위 가운데 50% 안쪽)
+            if (xDistoNet <= 0.5f * 0.5f * netWidth)
+            {
+                // 그물 바깥 방향으로 이동
+
+                float directionToNet = Mathf.Sign(net.position.x - transform.position.x); // 그물의 x 좌표 방향을 계산
+                transform.position += new Vector3(-directionToNet * speedMultiplier * Time.deltaTime, 0, 0); // 그물의 x 좌표 반대 방향으로 이동
+            }
+            else // 그물 범위 밖
+            {
+                // 그대로 직진 (X방향 이동 없음)
             }
         }
 
