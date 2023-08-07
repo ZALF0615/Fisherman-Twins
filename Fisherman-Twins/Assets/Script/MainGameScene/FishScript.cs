@@ -40,8 +40,9 @@ public class FishScript : MonoBehaviour
                 speedZ = -1.5f;
                 break;
             case 12: // 날치
-                weight = 0.5f;
                 price = 7;
+                weight = 0.5f;
+                width = 1.2f;
                 speedZ = -1.25f;
                 break;
             case 13: // 가재
@@ -73,28 +74,26 @@ public class FishScript : MonoBehaviour
 
         transform.localScale *= width;
 
+        var anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            // 애니메이션 시작 위치 랜덤화
+            string animationName = anim.runtimeAnimatorController.animationClips[0].name;
+            anim.Play(animationName, 0, Random.Range(0.0f, 1.0f)); // 시작 시간을 0과 1 사이의 랜덤한 값으로 설정
+        }
+
     }
 
-    // 물고기의 행동을 구현하는 함수
+    // 물고기의 특수한 행동을 구현하는 함수
     void PerformBehavior(int idx)
     {
         switch (idx)
         {
-            case 11: // 멸치
-                break;
-            case 12: // 날치
-                // 멸치의 행동 구현
-                break;
-            case 13: // 가재
-                break;
             case 14: // 은어
                 MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 15: // 송어
                 AvoidNet(10f, 10f); // 그물을 기피 (그물에서 멀어짐)
-                break;
-            case 16: // 연어
-                // 연어의 행동 구현
                 break;
                 // 나머지 물고기도 여기에 추가...
         }
