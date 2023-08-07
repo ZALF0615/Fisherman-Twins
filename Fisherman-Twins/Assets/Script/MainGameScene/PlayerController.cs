@@ -186,12 +186,16 @@ public class PlayerController : MonoBehaviour
     {
         switch (idx)
         {
-            case 27: // 복어
-                Damage();
-                break;
             case 25: // 피라냐
                 Damage();
                 break;
+            case 26: // 맹독물고기
+                Poison();
+                break;
+            case 27: // 복어
+                Damage();
+                break;
+
         }
     }
 
@@ -217,6 +221,17 @@ public class PlayerController : MonoBehaviour
 
         // 남은 그물의 수가 0 이하가 되면 게임 오버
         if (net_left <= 0) { GC.GameOver(); }
+    }
+
+    // 독 데미지
+    public void Poison()
+    {
+        float poisonRatio = Random.Range(1f, 20f); // 1% ~ 20%
+        
+        int targetGold = (int)(gold_net * ((100 - poisonRatio) * 0.01f) + 0.5f); // 그물 안 물고기 가격 1~20% 감소
+        gold_net = targetGold;
+
+        StartCoroutine(DamageAnim()); // 피해 애니메이션 시작
     }
 
     // 피해를 입은 후의 애니메이션을 처리하는 코루틴
