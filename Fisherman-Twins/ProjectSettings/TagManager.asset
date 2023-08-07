@@ -10,6 +10,7 @@ TagManager:
   - net
   - Fish
   - Obstacle
+  - bullet
   layers:
   - Default
   - TransparentFX

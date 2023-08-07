@@ -69,7 +69,7 @@ public class TileGenerator : MonoBehaviour
         // 물고기 생성
         if (tileIdx > 1 && GameController.GetInstance().isGameOngoing)
         {
-            int fishNum = Random.Range(10, 20);
+            int fishNum = 1; // Random.Range(10, 20);
 
             // 각 물고기에 대해
             for (int i = 0; i < fishNum; i++)

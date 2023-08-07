@@ -24,7 +24,7 @@ public class FishScript : MonoBehaviour
 
     public AudioClip getSound; // 물고기를 잡았을 때의 소리
     Transform net; // 그물 위치
-
+    public GameObject obstacle; // 물고기에 귀속된 장애물 (ex. 전기뱀장어의 전기공격)
     #endregion PARAM
 
     // fishIdx에 따른 물고기 특성 초기화
@@ -108,11 +108,12 @@ public class FishScript : MonoBehaviour
                 width = 1.5f;
                 speedZ = -0.6f;
                 break;
-            case 28: // 엔젤피쉬
-                price = 6;
-                weight = 0.3f;
-                width = 1.0f;
-                speedZ = -1.5f;
+            case 28: // 전기뱀장어
+                isBad = true; // 작살을 맞추기 전까지는 나쁜 물고기 취급
+                // weight = 0.0f;
+                width = 3f;
+                speedZ = -1.3f;
+                obstacle.GetComponent<ObstacleScript>().func = () => { Destroy(this.gameObject); }; // 전기 공격에 닿을 시 물고기도 함게 사라지도록 처리
                 break;
                 // 나머지 물고기도 여기에 추가...
         }
@@ -246,4 +247,28 @@ public class FishScript : MonoBehaviour
         // 특성에 따른 행동 구현
         PerformBehavior(fishIdx);
     }
+    void OnTriggerEnter(Collider other)
+    {
+        // "bullet" 태그를 가진 오브젝트와의 충돌 검사
+        if (other.tag == "bullet")
+        {
+            switch (fishIdx)
+            {
+                case 28: // 전기뱀장어
+                    Destroy(obstacle); // 전기 공격 삭제
+                    speedZ = -0.2f; // 속도 줄이기
+                    isBad = false; // 포
+                    break;
+                default:
+                    // 총알과 물고기 파괴
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
+                    break;
+                    // 나머지 물고기도 여기에 추가...
+            }
+
+
+        }
+    }
+
 }
