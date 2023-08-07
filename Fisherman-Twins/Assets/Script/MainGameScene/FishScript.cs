@@ -45,8 +45,9 @@ public class FishScript : MonoBehaviour
                 speedZ = -1.25f;
                 break;
             case 13: // 가재
-                 weight = 2.0f;
                 price = 18;
+                weight = 2.0f;
+                width = 1.4f;
                 speedZ = -0.7f;
                 break;
             case 14: // 은어
@@ -62,8 +63,9 @@ public class FishScript : MonoBehaviour
                 speedZ = -0.9f;
                 break;
             case 16: // 연어
-                weight = 10.0f;
                 price = 80;
+                weight = 10.0f;
+                width = 2f;
                 speedZ = -0.6f;
                 break;
                 // 나머지 물고기도 여기에 추가...
