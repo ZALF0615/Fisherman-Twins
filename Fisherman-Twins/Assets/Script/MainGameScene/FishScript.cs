@@ -75,11 +75,44 @@ public class FishScript : MonoBehaviour
                 width = 1.0f;
                 speedZ = -1.5f;
                 break;
+            case 22: // 농어
+                price = 14;
+                weight = 5f;
+                width = 1.5f;
+                speedZ = -1.2f;
+                break;
+            case 23: // 메기
+                price = 42;
+                weight = 15f;
+                width = 1.8f;
+                speedZ = -0.5f;
+                break;
+            case 24: // 가오리
+                price = 90;
+                weight = 30f;
+                width = 2.3f;
+                speedZ = -0.8f;
+                break;
+            case 25: // 피라냐
+                isBad = true;
+                width = 1.3f;
+                speedZ = -1.2f;
+                break;
+            case 26: // 맹독 물고기
+                isBad = true;
+                width = 1.7f;
+                speedZ = -0.85f;
+                break;
             case 27: // 복어
-                price = 0;
-                weight = 0f;
+                isBad = true;
                 width = 1.5f;
                 speedZ = -0.6f;
+                break;
+            case 28: // 엔젤피쉬
+                price = 6;
+                weight = 0.3f;
+                width = 1.0f;
+                speedZ = -1.5f;
                 break;
                 // 나머지 물고기도 여기에 추가...
         }
