@@ -141,6 +141,9 @@ public class FishScript : MonoBehaviour
             case 15: // 송어
                 AvoidNet(10f, 10f); // 그물을 기피 (그물에서 멀어짐)
                 break;
+            case 25: // 복어
+                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                break;
             case 27: // 복어
                 InflateNearNet(10f, 3f, 2f);
                 break;
@@ -155,7 +158,6 @@ public class FishScript : MonoBehaviour
     // 시작거리 안쪽에서는, 그물 범위 바깥에 있으면 그물 중심 방향으로 이동, 그물 범위 안쪽이면 직진 이동
     void MoveTowardNet(float startDistance, float speedMultiplier)
     {
-
         var xDistoNet = Mathf.Abs(transform.position.x - net.transform.position.x); //  물고기와 그물 사이의 수평방향(X) 거리
         var zDistoNet = Mathf.Abs(transform.position.z - net.transform.position.z); //  물고기와 그물 사이의 수직방향(Z) 거리
 

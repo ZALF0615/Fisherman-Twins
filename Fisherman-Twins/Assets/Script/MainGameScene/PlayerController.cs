@@ -189,6 +189,9 @@ public class PlayerController : MonoBehaviour
             case 27: // 복어
                 Damage();
                 break;
+            case 25: // 피라냐
+                Damage();
+                break;
         }
     }
 
