@@ -122,6 +122,7 @@ public class FishScript : MonoBehaviour
         var anim = GetComponent<Animator>();
         if (anim != null)
         {
+            print("dADAD");
             // 애니메이션 시작 위치 랜덤화
             string animationName = anim.runtimeAnimatorController.animationClips[0].name;
             anim.Play(animationName, 0, Random.Range(0.0f, 1.0f)); // 시작 시간을 0과 1 사이의 랜덤한 값으로 설정
