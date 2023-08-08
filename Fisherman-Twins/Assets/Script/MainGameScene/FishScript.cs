@@ -73,25 +73,25 @@ public class FishScript : MonoBehaviour
         switch (idx)
         {
             case 14: // 은어
-                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 15: // 송어
                 AvoidNet(10f, 10f); // 그물을 기피 (그물에서 멀어짐)
                 break;
             case 25: // 피라냐
-                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 27: // 복어
                 InflateNearNet(10f, 3f, 2f);
                 break;
             case 28: // 전기뱀장어
-                if (isBad) { MoveTowardNet(10f, 10f); } // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                if (isBad) { MoveTowardNet(10f, 10f, 10f); } // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 32: // 뼈 은어
-                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 35: // 뼈 피라냐
-                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 37: // 뼈 복어
                 InflateNearNet(10f, 3f, 2f);
@@ -105,14 +105,14 @@ public class FishScript : MonoBehaviour
     // 그물 방향으로 이동
     // 시작거리 바깥에서는 작동 안함
     // 시작거리 안쪽에서는, 그물 범위 바깥에 있으면 그물 중심 방향으로 이동, 그물 범위 안쪽이면 직진 이동
-    void MoveTowardNet(float startDistance, float speedMultiplier)
+    void MoveTowardNet(float startDistanceZ, float startDistanceX, float speedMultiplier)
     {
         var xDistoNet = Mathf.Abs(transform.position.x - net.transform.position.x); //  물고기와 그물 사이의 수평방향(X) 거리
         var zDistoNet = Mathf.Abs(transform.position.z - net.transform.position.z); //  물고기와 그물 사이의 수직방향(Z) 거리
 
         var netWidth = GameController.GetInstance().player.netWidth; // 현재 그물의 길이
 
-        if (zDistoNet < startDistance) // 일정 범위 안에서만 그물 감지
+        if (zDistoNet < startDistanceZ && xDistoNet < startDistanceX) // 일정 범위 안에서만 그물 감지
         {
             var a = 20;
 
@@ -156,9 +156,10 @@ public class FishScript : MonoBehaviour
 
     }
 
+
+    // 그물 주변에서 부풀어오름
     private bool hasStartedInflating = false;  // 부풀어오르기 시작한 적이 있는지를 나타내는 변수
     float originalScale; // 원래의 스케일을 저장할 변수
-
     void InflateNearNet(float inflateDistance, float inflateSpeed, float maxScaleRatio)
     {
         // 물고기와 그물 사이의 거리를 계산
@@ -173,6 +174,18 @@ public class FishScript : MonoBehaviour
             // 부풀어 오르도록 스케일을 점차적으로 증가
             float newScale = Mathf.Min(transform.localScale.x + inflateSpeed * Time.deltaTime, originalScale * maxScaleRatio);
             transform.localScale = new Vector3(newScale, newScale, newScale);
+        }
+    }
+
+    // 다른 물고기 잡아먹음
+    void EatOtherFish(GameObject targetFish)
+    {
+        var targetWidth = targetFish.GetComponent<FishScript>().width;
+
+        if(targetWidth < width) // 더 작은 물고기인 경우
+        {
+            print("잡아먹었다! : " + targetFish.name);
+            Destroy(targetFish);
         }
     }
 
@@ -211,6 +224,14 @@ public class FishScript : MonoBehaviour
                     Destroy(other.gameObject);
                     Destroy(gameObject);
                     break;
+            }
+        }
+
+        if (other.tag == "Fish")
+        {
+            if(fishIdx == 23 || fishIdx == 34) // 메기 or 뼈메기
+            {
+                EatOtherFish(other.gameObject); // 다른 물고기 잡아먹음
             }
         }
     }
