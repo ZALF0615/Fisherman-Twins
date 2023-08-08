@@ -31,93 +31,28 @@ public class FishScript : MonoBehaviour
     // 현재는 수동으로 입력, 추후에 스프레드 시트 데이터 받아오는 식으로 변경
     public void Initialize()
     {
-        // Dictionary<string, string> fishData = DataLoader.dataSheets["FishData"];
+        Dictionary<int, Fish> fishList = GameController.GetInstance().fishData.FishList;
+        var fishData = fishList[fishIdx];
 
-        switch (fishIdx)
+        isBad = fishData.IsBad;
+
+        if (!isBad) // 일반 물고기
         {
-            case 11: // 멸치
-                price = 3;
-                weight = 0.2f;
-                width = 1.0f;
-                speedZ = -1.5f;
-                break;
-            case 12: // 날치
-                price = 7;
-                weight = 0.5f;
-                width = 1.2f;
-                speedZ = -1.25f;
-                break;
-            case 13: // 가재
-                price = 18;
-                weight = 2.0f;
-                width = 1.4f;
-                speedZ = -0.7f;
-                break;
-            case 14: // 은어
-                price = 20;
-                weight = 4.0f;
-                width = 1.5f;
-                speedZ = -1.2f;
-                break;
-            case 15: // 송어
-                price = 56;
-                weight = 7.0f;
-                width = 1.75f;
-                speedZ = -0.9f;
-                break;
-            case 16: // 연어
-                price = 80;
-                weight = 10.0f;
-                width = 2f;
-                speedZ = -0.6f;
-                break;
-            case 21: // 엔젤피쉬
-                price = 6;
-                weight = 0.3f;
-                width = 1.0f;
-                speedZ = -1.5f;
-                break;
-            case 22: // 농어
-                price = 14;
-                weight = 5f;
-                width = 1.5f;
-                speedZ = -1.2f;
-                break;
-            case 23: // 메기
-                price = 42;
-                weight = 15f;
-                width = 1.8f;
-                speedZ = -0.5f;
-                break;
-            case 24: // 가오리
-                price = 90;
-                weight = 30f;
-                width = 2.3f;
-                speedZ = -0.8f;
-                break;
-            case 25: // 피라냐
-                isBad = true;
-                width = 1.3f;
-                speedZ = -1.2f;
-                break;
-            case 26: // 맹독 물고기
-                isBad = true;
-                width = 1.7f;
-                speedZ = -0.85f;
-                break;
-            case 27: // 복어
-                isBad = true;
-                width = 1.5f;
-                speedZ = -0.6f;
-                break;
-            case 28: // 전기뱀장어
-                isBad = true; // 작살을 맞추기 전까지는 나쁜 물고기 취급
-                // weight = 0.0f;
-                width = 3f;
-                speedZ = -1.3f;
-                obstacle.GetComponent<ObstacleScript>().func = () => { Destroy(this.gameObject); }; // 전기 공격에 닿을 시 물고기도 함게 사라지도록 처리
-                break;
-                // 나머지 물고기도 여기에 추가...
+            price = fishData.Price;
+            weight = fishData.Weight;
+            width = fishData.Width;
+            speedZ = fishData.SpeedZ;
+        }
+        else
+        {
+            width = fishData.Width;
+            speedZ = fishData.SpeedZ;
+        }
+
+        if (fishIdx == 28) // 전기뱀장어
+        {
+            isBad = true; // 작살을 맞추기 전까지는 나쁜 물고기 취급
+            obstacle.GetComponent<ObstacleScript>().func = () => { Destroy(this.gameObject); }; // 전기 공격에 닿을 시 물고기도 함게 사라지도록 처리
         }
 
         transform.localScale *= width;
@@ -245,7 +180,7 @@ public class FishScript : MonoBehaviour
     {
         // -z방향으로 이동
 
-        var newZ = transform.position.z + speedZ * GameController.GetInstance().player.speedZ * Time.deltaTime;
+        var newZ = transform.position.z - speedZ * GameController.GetInstance().player.speedZ * Time.deltaTime;
         transform.position = new Vector3(transform.position.x, 0, newZ);
 
         // 특성에 따른 행동 구현

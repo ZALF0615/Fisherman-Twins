@@ -22,7 +22,7 @@ public class FishData : MonoBehaviour
     }
     public void ParseData(List<string[]> csvData)
     {
-        print("LoadFishData");
+        // print("LoadFishData");
 
         List<string[]> lines = DataLoader.dataSheets["FishData"];
 
@@ -61,7 +61,7 @@ public class FishData : MonoBehaviour
             FishList.Add(idx, fish);
         }
 
-        DisplayAllFishData();
+        // DisplayAllFishData();
     }
     public void DisplayAllFishData()
     {
