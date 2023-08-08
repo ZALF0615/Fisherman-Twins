@@ -19,14 +19,7 @@ public class ObstacleScript : MonoBehaviour
     {
         if (other.tag == "net")
         {
-            switch (obstacleIdx)
-            {
-                case 28: // 전기뱀장어 전기공격
-                    GameController.GetInstance().player.Damage();
-                    break;
-            }
-
-            if(func != null) { func(); }
+            if(func != null) { func(); } // 장애물 쪽에서 특수한 조건하에 행동을 해야할 경우
         }
     }
 

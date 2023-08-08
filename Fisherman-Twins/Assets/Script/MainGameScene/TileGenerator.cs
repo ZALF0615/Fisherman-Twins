@@ -16,7 +16,7 @@ public class TileGenerator : MonoBehaviour
     public Transform tileParent; // 생성된 모든 타일의 부모 객체
 
     public GameObject[] tilePrefabs; // 타일 프리팹 배열
-    public GameObject[] fishPrefabs; // 물고기 프리팹 배열
+    public GameObject[] ObjectPrefabs; // 오브젝트(물고기, 장애물, 아이템) 프리팹 배열
 
     public int startTileIdx; // 시작 타일 인덱스
     public int preInstantiateNum; // 사전 인스턴스화 숫자
@@ -75,14 +75,14 @@ public class TileGenerator : MonoBehaviour
             for (int i = 0; i < fishNum; i++)
             {
                 // 물고기 프리팹 배열에서 랜덤하게 물고기를 선택
-                int fishIdx = Random.Range(0, fishPrefabs.Length);
+                int fishIdx = Random.Range(0, ObjectPrefabs.Length);
 
                 // 물고기의 위치를 랜덤하게 설정 (강의 폭과 타일의 크기에 따라)
                 var posX = Random.Range(FISH_MARGIN - RIVER_WIDTH / 2.0f, RIVER_WIDTH / 2.0f - FISH_MARGIN);
                 var posZ = Random.Range(BLOCK_SIZE / -2.0f, BLOCK_SIZE / 2.0f);
 
                 // 선택된 물고기 프리팹을 인스턴스화하여 물고기 오브젝트를 생성
-                var fish = (GameObject)Instantiate(fishPrefabs[fishIdx]);
+                var fish = (GameObject)Instantiate(ObjectPrefabs[fishIdx]);
                 // 생성된 물고기의 부모를 방금 생성된 타일으로 설정
                 fish.transform.SetParent(tileObj.transform);
                 // 생성된 물고기의 위치를 설정

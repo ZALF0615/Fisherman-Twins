@@ -230,7 +230,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.9500803e+18, y: 0, z: NaN, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.4e-44, z: 0, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -319,8 +319,8 @@ MonoBehaviour:
   tileParent: {fileID: 180068587}
   tilePrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
-  fishPrefabs:
-  - {fileID: 7918280023522824027, guid: 276addb296a78fe44a97a1b2173b8ba4, type: 3}
+  ObjectPrefabs:
+  - {fileID: 7918280023522824027, guid: a87014a3ff5b6a34290a43ae012765dd, type: 3}
   startTileIdx: 0
   preInstantiateNum: 3
 --- !u!95 &180068589
@@ -799,7 +799,7 @@ GameObject:
   - component: {fileID: 483242909}
   m_Layer: 0
   m_Name: p2
-  m_TagString: Untagged
+  m_TagString: Boat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1950,7 +1950,7 @@ GameObject:
   - component: {fileID: 1513280551}
   m_Layer: 0
   m_Name: p1
-  m_TagString: Untagged
+  m_TagString: Boat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

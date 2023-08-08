@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
             var hitSound = obs.hitSound;  // 장애물에 부딪히는 소리를 가져옴
             GC.PlaySE(hitSound);  // 소리를 재생
         }
+
     }
 
     #endregion NET
@@ -204,6 +205,9 @@ public class PlayerController : MonoBehaviour
         switch (idx)
         {
             case 0: // 바위
+                Damage();
+                break;
+            case 28: // 전기뱀장어 전기공격
                 Damage();
                 break;
         }

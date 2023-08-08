@@ -11,6 +11,8 @@ TagManager:
   - Fish
   - Obstacle
   - bullet
+  - Item
+  - Boat
   layers:
   - Default
   - TransparentFX
