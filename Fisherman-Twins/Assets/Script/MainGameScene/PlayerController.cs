@@ -206,6 +206,15 @@ public class PlayerController : MonoBehaviour
             case 37: // 뼈 복어
                 Damage();
                 break;
+            case 45: // 불가사리
+                Damage();
+                break;
+            case 46: // 상어
+                Damage();
+                break;
+            case 47: // 크라켄
+                Damage();
+                break;
 
         }
     }
