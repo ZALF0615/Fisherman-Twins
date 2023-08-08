@@ -280,6 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 180068587}
   - component: {fileID: 180068588}
+  - component: {fileID: 180068589}
   m_Layer: 0
   m_Name: TileParent
   m_TagString: Untagged
@@ -319,9 +320,32 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   fishPrefabs:
-  - {fileID: 7918280023522824027, guid: 853a4f12e72819b48b6421b1679ddf4a, type: 3}
+  - {fileID: 7918280023522824027, guid: 29b23d30057f5884a83e5882a384af91, type: 3}
+  - {fileID: 7918280023522824027, guid: ea1b1ac6de1763e4392f117762588388, type: 3}
+  - {fileID: 7918280023522824027, guid: c21b5089744eb164baae53620eda3554, type: 3}
+  - {fileID: 7918280023522824027, guid: 7613a600dfa99784ca8cade440ec8dc0, type: 3}
   startTileIdx: 0
   preInstantiateNum: 3
+--- !u!95 &180068589
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180068586}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 641dcac400c5de64b93126550931f98c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &190517525
 GameObject:
   m_ObjectHideFlags: 0
