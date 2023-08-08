@@ -319,7 +319,7 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   fishPrefabs:
-  - {fileID: 7918280023522824027, guid: 3a8250f0c7823de4bb35adfbca4f56ad, type: 3}
+  - {fileID: 7918280023522824027, guid: 853a4f12e72819b48b6421b1679ddf4a, type: 3}
   startTileIdx: 0
   preInstantiateNum: 3
 --- !u!1 &190517525

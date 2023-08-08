@@ -28,7 +28,6 @@ public class FishScript : MonoBehaviour
     #endregion PARAM
 
     // fishIdx에 따른 물고기 특성 초기화
-    // 현재는 수동으로 입력, 추후에 스프레드 시트 데이터 받아오는 식으로 변경
     public void Initialize()
     {
         Dictionary<int, Fish> fishList = GameController.GetInstance().fishData.FishList;
@@ -79,7 +78,7 @@ public class FishScript : MonoBehaviour
             case 15: // 송어
                 AvoidNet(10f, 10f); // 그물을 기피 (그물에서 멀어짐)
                 break;
-            case 25: // 복어
+            case 25: // 피라냐
                 MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 27: // 복어
@@ -87,6 +86,15 @@ public class FishScript : MonoBehaviour
                 break;
             case 28: // 전기뱀장어
                 if (isBad) { MoveTowardNet(10f, 10f); } // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                break;
+            case 32: // 뼈 은어
+                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                break;
+            case 35: // 뼈 피라냐
+                MoveTowardNet(10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                break;
+            case 37: // 뼈 복어
+                InflateNearNet(10f, 3f, 2f);
                 break;
                 // 나머지 물고기도 여기에 추가...
         }

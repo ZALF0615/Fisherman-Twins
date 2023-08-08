@@ -197,6 +197,15 @@ public class PlayerController : MonoBehaviour
                 break;
             case 28: // 전기뱀장어
                 break;
+            case 35: // 뼈 피라냐
+                Damage();
+                break;
+            case 36: // 뼈 맹독 물고기
+                Poison();
+                break;
+            case 37: // 뼈 복어
+                Damage();
+                break;
 
         }
     }
