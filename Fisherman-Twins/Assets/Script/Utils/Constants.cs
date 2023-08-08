@@ -1,14 +1,15 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
+using System.Linq;
 
 public static class Constants
 {
     public static event Action OnConstantsLoaded;
 
-    private const string SHEET_ID = "1VA40i_QLGF7Q7YQhVyofrXhYH-HHyqIS-3mfShDKeCc";  // Your Sheet ID here
-    private const string SHEET_NAME = "Constants";  // Your Sheet Name here
+    private const string SHEET_NAME = "Constants";
 
     public static float RIVER_WIDTH;
     public static float BLOCK_SIZE;
@@ -31,39 +32,29 @@ public static class Constants
     {
         private void Awake()
         {
-            StartCoroutine(LoadDataFromSpreadsheet());
+            DataLoader.OnDataLoaded += OnDataLoaded;
         }
 
-        private IEnumerator LoadDataFromSpreadsheet()
+        private void OnDataLoaded(string sheetName)
         {
-            UnityWebRequest request = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/" + SHEET_ID + "/gviz/tq?tqx=out:csv&sheet=" + SHEET_NAME);
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.ProtocolError || request.result == UnityWebRequest.Result.ConnectionError)
+            if (sheetName == SHEET_NAME)
             {
-                Debug.LogError(request.error);
+                var data = DataLoader.dataSheets[SHEET_NAME];
+                ParseData(data);
+                OnConstantsLoaded?.Invoke();
             }
-            else
-            {
-                ParseData(request.downloadHandler.text);
-            }
-
-            // Destroy the GameObject after loading the data
-            OnConstantsLoaded?.Invoke();
-            Destroy(gameObject);
         }
 
-        private void ParseData(string csvData)
+        private void ParseData(List<string[]> csvData)
         {
-            var lines = csvData.Split('\n');
+            List<string[]> lines = csvData;
 
-            for (int i = 1; i < lines.Length; i++) // Skip the first row
+            for (int i = 1; i < lines.Count; i++) // Skip the first row
             {
-                var line = lines[i];
-                var cells = line.Split(',');
+                var columns = lines[i];
 
-                string key = cells[0].Trim('"');
-                float value = float.Parse(cells[1].Trim('"'));
+                string key = columns[0];
+                float value = float.Parse(columns[1]);
 
                 // Debug.Log("Key: " + key + ", Value: " + value);  // 여기서 로그를 출력합니다.
 
@@ -98,6 +89,8 @@ public static class Constants
                         break;
                 }
             }
+
+            Destroy(this.gameObject);
         }
     }
 }

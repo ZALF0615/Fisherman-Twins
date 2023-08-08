@@ -215,9 +215,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishIdx: 16
   isBad: 0
-  fishName: 
   price: 0
   weight: 0
+  width: 0
   speedZ: 0
   getSound: {fileID: 8300000, guid: 5ef13cbd4b23c114b9ae4d372d4e64c0, type: 3}
 --- !u!54 &2104249300097323436
@@ -263,8 +263,8 @@ RectTransform:
   m_GameObject: {fileID: 8002719482904266308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8116903753755494295}
   m_RootOrder: 0

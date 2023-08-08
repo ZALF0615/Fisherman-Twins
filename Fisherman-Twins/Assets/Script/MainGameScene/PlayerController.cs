@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
             var hitSound = obs.hitSound;  // 장애물에 부딪히는 소리를 가져옴
             GC.PlaySE(hitSound);  // 소리를 재생
         }
+
     }
 
     #endregion NET
@@ -184,11 +185,17 @@ public class PlayerController : MonoBehaviour
     // 나쁜 물고기를 얻었을 때
     public void GetBadFish(int idx)
     {
-        switch (idx)
+        if (idx == 26 || idx == 36) // 맹독물고기 or 뼈 맹독물고기
         {
-            case 27: // 복어
-                Damage();
-                break;
+            Poison();
+        }
+        else if(idx == 28) // 전기뱀장어
+        {
+            // 데미지 없음 (전기 공격 부분이 데미지 충돌 처리)
+        }
+        else // 나머지
+        {
+            Damage();
         }
     }
 
@@ -198,6 +205,9 @@ public class PlayerController : MonoBehaviour
         switch (idx)
         {
             case 0: // 바위
+                Damage();
+                break;
+            case 28: // 전기뱀장어 전기공격
                 Damage();
                 break;
         }
@@ -214,6 +224,17 @@ public class PlayerController : MonoBehaviour
 
         // 남은 그물의 수가 0 이하가 되면 게임 오버
         if (net_left <= 0) { GC.GameOver(); }
+    }
+
+    // 독 데미지
+    public void Poison()
+    {
+        float poisonRatio = Random.Range(1f, 20f); // 1% ~ 20%
+        
+        int targetGold = (int)(gold_net * ((100 - poisonRatio) * 0.01f) + 0.5f); // 그물 안 물고기 가격 1~20% 감소
+        gold_net = targetGold;
+
+        StartCoroutine(DamageAnim()); // 피해 애니메이션 시작
     }
 
     // 피해를 입은 후의 애니메이션을 처리하는 코루틴

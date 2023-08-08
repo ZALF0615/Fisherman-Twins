@@ -1,8 +1,6 @@
 ﻿/*
  * Bullet.cs
- * 
  * 총알(작살) 프리팹에 부여 
- * 
  */
 
 using System.Collections;
@@ -25,14 +23,4 @@ public class Bullet : MonoBehaviour
         transform.position += transform.forward * speed * Time.deltaTime;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        // "Fish" 태그를 가진 오브젝트와의 충돌 검사
-        if (other.tag == "Fish")
-        {
-            // 총알과 물고기 파괴
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-        }
-    }
 }
