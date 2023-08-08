@@ -219,7 +219,7 @@ MonoBehaviour:
   weight: 0
   width: 0
   speedZ: 0
-  getSound: {fileID: 8300000, guid: 5ef13cbd4b23c114b9ae4d372d4e64c0, type: 3}
+  getSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
   obstacle: {fileID: 0}
 --- !u!54 &2104249300097323436
 Rigidbody:
@@ -264,16 +264,16 @@ RectTransform:
   m_GameObject: {fileID: 8002719482904266308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8116903753755494295}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 488}
+  m_AnchoredPosition: {x: 0, y: 123}
+  m_SizeDelta: {x: 590, y: 516}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8775725349051130798
 CanvasRenderer:
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d3feb8e8f5ebcf944bdf0b958f221ae7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e824782c4b027414fac8710a5ebb7eb3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
