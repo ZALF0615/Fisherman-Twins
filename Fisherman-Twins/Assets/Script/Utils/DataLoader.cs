@@ -2,57 +2,105 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
-public class DataLoader : MonoBehaviour
+public static class DataLoader
 {
-    public string SHEET_ID;
+    public static event Action<string> OnDataLoaded;
 
-    // ｽﾃﾆｮ ﾀﾌｸｧｰ? ｵ･ﾀﾌﾅﾍｸｦ ﾀ?ﾀ衂ﾒ ｵ?ｼﾅｳﾊｸｮ
+    public static readonly string SHEET_ID = "1VA40i_QLGF7Q7YQhVyofrXhYH-HHyqIS-3mfShDKeCc";  // Your Sheet ID here
 
-    private List<string> loadSheetNames = new List<string>() { "", "" };
-    public Dictionary<string, string> dataSheets = new Dictionary<string, string>();
-
-    void Start()
+    static List<string> loadSheetNames = new List<string>() { "Constants", "FishData" };
+    static public Dictionary<string, List<string[]>> dataSheets = new Dictionary<string, List<string[]>>();
+    static DataLoader()
     {
-        // loadSheetNames ｾﾈｿ｡ ﾀﾖｴﾂ ｸ?ｵ?ｽﾃﾆｮｸ?｡ ｴ?ﾘ ｷﾎｵ?
-        foreach(var sheetName in loadSheetNames)
-        {
-            StartCoroutine(LoadDataFromSpreadsheet(sheetName));
-        }
+        // Create an instance of MonoBehaviour to run the coroutine
+        new GameObject("ConstantsInitializer", typeof(RuntimeInitializer));
     }
 
-    // ﾀﾌ ｸﾞｼﾒｵ蟠ﾂ ｽｺﾇﾁｷｹｵ蠖ﾃﾆｮｿ｡ｼｭ ｵ･ﾀﾌﾅﾍｸｦ ｺﾒｷｯｿﾍ ﾀ?ﾀ衂ﾕｴﾏｴﾙ.
-    public IEnumerator LoadDataFromSpreadsheet(string sheetName)
+    private class RuntimeInitializer : MonoBehaviour
     {
-        string url = $"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheetName}";
-        UnityWebRequest request = UnityWebRequest.Get(url);
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
+        void Awake()
         {
-            // ｵ･ﾀﾌﾅﾍｸｦ ｵ?ｼﾅｳﾊｸｮｿ｡ ﾀ?ﾀ衂ﾕｴﾏｴﾙ.
-            dataSheets[sheetName] = request.downloadHandler.text;
+            foreach (var sheetName in loadSheetNames)
+            {
+                StartCoroutine(LoadDataFromSpreadsheet(sheetName));
+            }
         }
-        else
-        {
-            Debug.LogError("Data loading failed: " + request.error);
-        }
-    }
 
-    // ﾀﾌ ｸﾞｼﾒｵ蟠ﾂ ﾀ?ﾀ蠏ﾈ ｵ･ﾀﾌﾅﾍｸｦ ﾆﾄｽﾌﾇﾕｴﾏｴﾙ.
-    public void ParseData(string sheetName)
-    {
-        // ｽﾃﾆｮ ﾀﾌｸｧﾀｸｷﾎ ｵ･ﾀﾌﾅﾍｸｦ ﾃ｣ｽﾀｴﾏｴﾙ.
-        if (dataSheets.ContainsKey(sheetName))
+        public IEnumerator LoadDataFromSpreadsheet(string sheetName)
         {
-            string csvData = dataSheets[sheetName];
-            // ｿｩｱ篩｡ ｵ･ﾀﾌﾅﾍｸｦ ﾆﾄｽﾌﾇﾏｴﾂ ﾄﾚｵ蟶ｦ ﾃﾟｰ｡ﾇﾕｴﾏｴﾙ.
-            // ｿｹｸｦ ｵ鮴? CSV ｵ･ﾀﾌﾅﾍｸｦ ﾇ牴? ｿｭｷﾎ ｳｪｴｩｰ? ｰ｢ ﾇﾗｸ?ﾀｻ ﾆﾄｽﾌﾇﾏｿｩ ｸｮｽｺﾆｮｳｪ ｵ?ｼﾅｳﾊｸｮｿ｡ ﾀ?ﾀ衂ﾒ ｼ? ﾀﾖｽﾀｴﾏｴﾙ.
+            // print("Load Data: " + sheetName);
+
+            string url = $"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheetName}";
+            UnityWebRequest request = UnityWebRequest.Get(url);
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                dataSheets[sheetName] = ParseCSV(request.downloadHandler.text);
+                OnDataLoaded?.Invoke(sheetName);
+            }
+            else
+            {
+                Debug.LogError("Data loading failed: " + request.error);
+            }
+
+
+            Destroy(this.gameObject);
         }
-        else
+
+        public List<string[]> ParseCSV(string csvData)
         {
-            Debug.LogError("Sheet not found: " + sheetName);
+            List<string[]> rows = new List<string[]>();
+            bool insideQuote = false;
+            List<string> columns = new List<string>();
+            string currentColumn = "";
+
+            for (int i = 0; i < csvData.Length; i++)
+            {
+                char currentChar = csvData[i];
+
+                if (currentChar == '"')
+                {
+                    insideQuote = !insideQuote;
+                    continue;
+                }
+
+                if (insideQuote)
+                {
+                    currentColumn += currentChar;
+                }
+                else
+                {
+                    if (currentChar == ',')
+                    {
+                        columns.Add(currentColumn);
+                        currentColumn = "";
+                    }
+                    else if (currentChar == '\n')
+                    {
+                        columns.Add(currentColumn);
+                        rows.Add(columns.ToArray());
+                        columns.Clear();
+                        currentColumn = "";
+                    }
+                    else
+                    {
+                        currentColumn += currentChar;
+                    }
+                }
+            }
+
+            // 마지막 행 처리
+            if (!string.IsNullOrEmpty(currentColumn) || columns.Count > 0)
+            {
+                columns.Add(currentColumn);
+                rows.Add(columns.ToArray());
+            }
+
+            return rows;
         }
     }
 }

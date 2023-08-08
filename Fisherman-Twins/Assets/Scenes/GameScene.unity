@@ -153,7 +153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &170076733
 GameObject:
@@ -230,7 +230,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.03e-43, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 5.9500803e+18, y: 0, z: NaN, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -300,7 +300,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &180068588
 MonoBehaviour:
@@ -319,7 +319,7 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   fishPrefabs:
-  - {fileID: 7918280023522824027, guid: 16e2f073f35b428478f2e0d3e70ff15a, type: 3}
+  - {fileID: 7918280023522824027, guid: 3a8250f0c7823de4bb35adfbca4f56ad, type: 3}
   startTileIdx: 0
   preInstantiateNum: 3
 --- !u!1 &190517525
@@ -1339,58 +1339,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884025229}
   m_CullTransparentMesh: 1
---- !u!1 &943301521
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 943301523}
-  - component: {fileID: 943301522}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &943301522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943301521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2c25135f6ddb0b47a51c1380383c101, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreUI: {fileID: 1632935488}
-  goldText: {fileID: 571089631}
-  weightText: {fileID: 1657741557}
-  netText: {fileID: 326845305}
-  distanceText: {fileID: 638391329}
-  gameOverPanel: {fileID: 1369536593}
-  scoreText: {fileID: 828026359}
-  isUIOn: 1
---- !u!4 &943301523
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943301521}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985137839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,8 +1429,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1185377308}
   - component: {fileID: 1185377307}
+  - component: {fileID: 1185377309}
+  - component: {fileID: 1185377310}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: Script
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1501,9 +1451,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameOngoing: 0
-  uiScript: {fileID: 943301522}
+  uiScript: {fileID: 1185377309}
   player: {fileID: 2122621192}
   tileGenerator: {fileID: 180068588}
+  fishData: {fileID: 1185377310}
   BGM: {fileID: 190517526}
   SE: {fileID: 1495592023}
   isAdventureMode: 0
@@ -1523,6 +1474,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1185377309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185377306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c25135f6ddb0b47a51c1380383c101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreUI: {fileID: 1632935488}
+  goldText: {fileID: 571089631}
+  weightText: {fileID: 1657741557}
+  netText: {fileID: 326845305}
+  distanceText: {fileID: 638391329}
+  gameOverPanel: {fileID: 1369536593}
+  scoreText: {fileID: 828026359}
+  isUIOn: 1
+--- !u!114 &1185377310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185377306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5e939728e29714eaeaac6aa1d2ac15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1209898443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1554,7 +1537,7 @@ Transform:
   - {fileID: 190517527}
   - {fileID: 1495592024}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1258197137
 GameObject:
@@ -1652,7 +1635,7 @@ RectTransform:
   - {fileID: 1369536594}
   - {fileID: 1970538908}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1930,7 +1913,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1513280544
 GameObject:
@@ -2183,7 +2166,7 @@ Transform:
   - {fileID: 483242912}
   - {fileID: 2122621190}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1970538907
 GameObject:

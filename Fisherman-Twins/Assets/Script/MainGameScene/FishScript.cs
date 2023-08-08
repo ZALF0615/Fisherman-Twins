@@ -31,6 +31,8 @@ public class FishScript : MonoBehaviour
     // 현재는 수동으로 입력, 추후에 스프레드 시트 데이터 받아오는 식으로 변경
     public void Initialize()
     {
+        // Dictionary<string, string> fishData = DataLoader.dataSheets["FishData"];
+
         switch (fishIdx)
         {
             case 11: // 멸치
@@ -123,7 +125,6 @@ public class FishScript : MonoBehaviour
         var anim = GetComponent<Animator>();
         if (anim != null)
         {
-            print("dADAD");
             // 애니메이션 시작 위치 랜덤화
             string animationName = anim.runtimeAnimatorController.animationClips[0].name;
             anim.Play(animationName, 0, Random.Range(0.0f, 1.0f)); // 시작 시간을 0과 1 사이의 랜덤한 값으로 설정
@@ -148,6 +149,9 @@ public class FishScript : MonoBehaviour
                 break;
             case 27: // 복어
                 InflateNearNet(10f, 3f, 2f);
+                break;
+            case 28: // 전기뱀장어
+                if (isBad) { MoveTowardNet(10f, 10f); } // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
                 // 나머지 물고기도 여기에 추가...
         }
@@ -264,11 +268,9 @@ public class FishScript : MonoBehaviour
                     Destroy(other.gameObject);
                     Destroy(gameObject);
                     break;
-                    // 나머지 물고기도 여기에 추가...
             }
-
-
         }
     }
 
 }
+
