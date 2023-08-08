@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 6214983925912053528}
   - component: {fileID: 2104249300097323436}
   m_Layer: 0
-  m_Name: "35_\uBF08\uD53C\uB77C\uB0D0"
+  m_Name: "37_\uD06C\uB77C\uCF04"
   m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1454fae5705f04f4587324d2dfaa2f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishIdx: 35
+  fishIdx: 37
   isBad: 0
   price: 0
   weight: 0
@@ -264,16 +264,16 @@ RectTransform:
   m_GameObject: {fileID: 8002719482904266308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8116903753755494295}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 697}
+  m_AnchoredPosition: {x: 0, y: 123}
+  m_SizeDelta: {x: 590, y: 516}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8775725349051130798
 CanvasRenderer:
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 27691c2440daab84897532a3af8bca09, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e824782c4b027414fac8710a5ebb7eb3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

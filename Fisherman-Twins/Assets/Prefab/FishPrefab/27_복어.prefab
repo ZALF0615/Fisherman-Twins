@@ -214,12 +214,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishIdx: 27
-  isBad: 1
+  isBad: 0
   price: 0
   weight: 0
   width: 0
   speedZ: 0
   getSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
+  obstacle: {fileID: 0}
 --- !u!54 &2104249300097323436
 Rigidbody:
   m_ObjectHideFlags: 0

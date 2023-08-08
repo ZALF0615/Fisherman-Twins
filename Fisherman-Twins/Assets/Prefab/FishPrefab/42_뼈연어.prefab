@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 6214983925912053528}
   - component: {fileID: 2104249300097323436}
   m_Layer: 0
-  m_Name: "36_\uBF08\uB9F9\uB3C5\uBB3C\uACE0\uAE30"
+  m_Name: "42_\uBF08\uC5F0\uC5B4"
   m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,13 +213,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1454fae5705f04f4587324d2dfaa2f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishIdx: 36
+  fishIdx: 42
   isBad: 0
   price: 0
   weight: 0
   width: 0
   speedZ: 0
-  getSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
+  getSound: {fileID: 8300000, guid: 5ef13cbd4b23c114b9ae4d372d4e64c0, type: 3}
   obstacle: {fileID: 0}
 --- !u!54 &2104249300097323436
 Rigidbody:
@@ -264,8 +264,8 @@ RectTransform:
   m_GameObject: {fileID: 8002719482904266308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8116903753755494295}
   m_RootOrder: 0
@@ -273,7 +273,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 513}
+  m_SizeDelta: {x: 800, y: 567}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8775725349051130798
 CanvasRenderer:
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3f5229898a74eba40b547295e2fd05a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4a52af024be4884e9d22aa770abe840, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

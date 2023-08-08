@@ -184,38 +184,17 @@ public class PlayerController : MonoBehaviour
     // 나쁜 물고기를 얻었을 때
     public void GetBadFish(int idx)
     {
-        switch (idx)
+        if (idx == 26 || idx == 36) // 맹독물고기 or 뼈 맹독물고기
         {
-            case 25: // 피라냐
-                Damage();
-                break;
-            case 26: // 맹독물고기
-                Poison();
-                break;
-            case 27: // 복어
-                Damage();
-                break;
-            case 28: // 전기뱀장어
-                break;
-            case 35: // 뼈 피라냐
-                Damage();
-                break;
-            case 36: // 뼈 맹독 물고기
-                Poison();
-                break;
-            case 37: // 뼈 복어
-                Damage();
-                break;
-            case 45: // 불가사리
-                Damage();
-                break;
-            case 46: // 상어
-                Damage();
-                break;
-            case 47: // 크라켄
-                Damage();
-                break;
-
+            Poison();
+        }
+        else if(idx == 28) // 전기뱀장어
+        {
+            // 데미지 없음 (전기 공격 부분이 데미지 충돌 처리)
+        }
+        else // 나머지
+        {
+            Damage();
         }
     }
 

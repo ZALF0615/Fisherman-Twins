@@ -87,13 +87,10 @@ public class FishScript : MonoBehaviour
             case 28: // 전기뱀장어
                 if (isBad) { MoveTowardNet(10f, 10f, 10f); } // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
-            case 32: // 뼈 은어
+            case 45: // 뼈 피라냐
                 MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
-            case 35: // 뼈 피라냐
-                MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
-                break;
-            case 37: // 뼈 복어
+            case 47: // 뼈 복어
                 InflateNearNet(10f, 3f, 2f);
                 break;
                 // 나머지 물고기도 여기에 추가...
@@ -229,7 +226,7 @@ public class FishScript : MonoBehaviour
 
         if (other.tag == "Fish")
         {
-            if(fishIdx == 23 || fishIdx == 34) // 메기 or 뼈메기
+            if(fishIdx == 23 || fishIdx == 43) // 메기 or 뼈메기
             {
                 EatOtherFish(other.gameObject); // 다른 물고기 잡아먹음
             }

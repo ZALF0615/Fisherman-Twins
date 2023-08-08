@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6778314277276833405}
   - component: {fileID: 214381781876771709}
   m_Layer: 0
-  m_Name: "35_\uBF08\uD53C\uB77C\uB0D0\uB5BC"
+  m_Name: "45_\uBF08\uD53C\uB77C\uB0D0\uB5BC"
   m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
