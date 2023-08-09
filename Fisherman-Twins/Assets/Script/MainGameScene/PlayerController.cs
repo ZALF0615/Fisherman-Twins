@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Fish")  // 충돌한 오브젝트가 물고기인 경우
         {
             var fish = other.GetComponent<FishScript>();  // 물고기 스크립트를 가져옴
+
+            AudioClip sound;
+
             if (!fish.isBad)  // 좋은 물고기인 경우
             {
                 GetFish(fish.price, fish.weight);  // 물고기를 얻음

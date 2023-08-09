@@ -23,6 +23,7 @@ public class FishScript : MonoBehaviour
     public float speedZ; // 물고기의 z방향 속도
 
     public AudioClip getSound; // 물고기를 잡았을 때의 소리
+
     Transform net; // 그물 위치
     public GameObject obstacle; // 물고기에 귀속된 장애물 (ex. 전기뱀장어의 전기공격)
     #endregion PARAM
@@ -53,6 +54,17 @@ public class FishScript : MonoBehaviour
             isBad = true; // 작살을 맞추기 전까지는 나쁜 물고기 취급
             obstacle.GetComponent<ObstacleScript>().func = () => { Destroy(this.gameObject); }; // 전기 공격에 닿을 시 물고기도 함게 사라지도록 처리
         }
+
+        if (fishIdx == 38) // 범고래
+        {
+            isBad = true; // 작살을 맞추기 전까지는 나쁜 물고기 취급
+        }
+
+        if (fishIdx == 48) // 마그마피쉬
+        {
+            isBad = true; // 작살을 맞추기 전까지는 나쁜 물고기 취급
+        }
+
 
         transform.localScale *= width;
 
@@ -85,6 +97,9 @@ public class FishScript : MonoBehaviour
                 InflateNearNet(10f, 3f, 2f);
                 break;
             case 28: // 전기뱀장어
+                if (isBad) { MoveTowardNet(10f, 10f, 10f); } // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
+                break;
+            case 38: // 범고래
                 if (isBad) { MoveTowardNet(10f, 10f, 10f); } // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 45: // 뼈 피라냐
@@ -180,8 +195,7 @@ public class FishScript : MonoBehaviour
         var targetWidth = targetFish.GetComponent<FishScript>().width;
 
         if(targetWidth < width) // 더 작은 물고기인 경우
-        {
-            print("잡아먹었다! : " + targetFish.name);
+        {   
             Destroy(targetFish);
         }
     }
@@ -213,8 +227,12 @@ public class FishScript : MonoBehaviour
             {
                 case 28: // 전기뱀장어
                     Destroy(obstacle); // 전기 공격 삭제
-                    speedZ = -0.2f; // 속도 줄이기
-                    isBad = false; // 포
+                    speedZ = 0.2f; // 속도 줄이기
+                    isBad = false; // 포획 가능 상태로 변경
+                    break;
+                case 38: // 범고래 
+                    speedZ = 0.2f;  // 속도 줄이기
+                    isBad = false;  // 포획 가능 상태로 변경
                     break;
                 default:
                     // 총알과 물고기 파괴

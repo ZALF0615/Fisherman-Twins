@@ -480,7 +480,7 @@ MonoBehaviour:
   weight: 0
   width: 0
   speedZ: 0
-  getSound: {fileID: 8300000, guid: 5ef13cbd4b23c114b9ae4d372d4e64c0, type: 3}
+  getSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
   obstacle: {fileID: 0}
 --- !u!54 &2104249300097323436
 Rigidbody:

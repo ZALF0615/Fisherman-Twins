@@ -230,7 +230,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3.4e-44, z: 0, w: NaN}
+  m_BoundingSphereOverride: {x: 9.1835e-41, y: 0, z: 0, w: 3e-45}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   ObjectPrefabs:
-  - {fileID: 7918280023522824027, guid: a87014a3ff5b6a34290a43ae012765dd, type: 3}
+  - {fileID: 7918280023522824027, guid: 0f722e8a1e9fc3c44a1727bfe12431a2, type: 3}
   startTileIdx: 0
   preInstantiateNum: 3
 --- !u!95 &180068589
