@@ -22,6 +22,9 @@ public class FishScript : MonoBehaviour
     public float width; // 물고기 너비
     public float speedZ; // 물고기의 z방향 속도
 
+
+    private int direction; // 물고기의 방향 -1: 왼쪽, 1: 오른쪽, 0을 포함한 그 외의 값: 오류
+
     public AudioClip getSound; // 물고기를 잡았을 때의 소리
 
     Transform net; // 그물 위치
@@ -65,8 +68,12 @@ public class FishScript : MonoBehaviour
             isBad = true; // 작살을 맞추기 전까지는 나쁜 물고기 취급
         }
 
-
+        // 물고기 너비를 반영
         transform.localScale *= width;
+
+        // 초기 방향을 랜덤으로 설정
+        direction = (Random.value > 0.5f) ? 1 : -1;
+        UpdateSpriteDirection();
 
         var anim = GetComponent<Animator>();
         if (anim != null)
@@ -88,7 +95,7 @@ public class FishScript : MonoBehaviour
                 MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
                 break;
             case 15: // 송어
-                AvoidNet(10f, 10f); // 그물을 기피 (그물에서 멀어짐)
+                AvoidNet(10f, 10f, 10f); // 그물을 기피 (그물에서 멀어짐)
                 break;
             case 25: // 피라냐
                 MoveTowardNet(10f, 10f, 10f); // 그물을 향해 돌진 (그물 쪽으로 서서히 이동)
@@ -143,14 +150,14 @@ public class FishScript : MonoBehaviour
     }
 
     // 그물 기피
-    void AvoidNet(float startDistance, float speedMultiplier)
+    void AvoidNet(float startDistanceZ, float startDistanceX, float speedMultiplier)
     {
         var xDistoNet = Mathf.Abs(transform.position.x - net.transform.position.x); //  물고기와 그물 사이의 수평방향(X) 거리
         var zDistoNet = Mathf.Abs(transform.position.z - net.transform.position.z); //  물고기와 그물 사이의 수직방향(Z) 거리
 
         var netWidth = GameController.GetInstance().player.netWidth; // 현재 그물의 길이
 
-        if (zDistoNet < startDistance) // 일정 범위 안에서만 그물 감지
+        if (zDistoNet < startDistanceZ && xDistoNet < startDistanceX) // 일정 범위 안에서만 그물 감지
         {
             // 물고기와 그물 사이의 수평방향(X) 거리가 그물 길이의 25% 이하일 경우 (그물 범위 가운데 50% 안쪽)
             if (xDistoNet <= 0.5f * 0.5f * netWidth)
@@ -202,6 +209,36 @@ public class FishScript : MonoBehaviour
 
     #endregion FEATURES
 
+    Vector3 previousPosition; // 전 프레임의 물고기 위치를 저장하는 변수
+    private void UpdateSpriteDirection()
+    {
+        // 움직임 감지 및 direction 업데이트
+        if (transform.position.x > previousPosition.x)
+        {
+            direction = 1; // 오른쪽
+        }
+        else if (transform.position.x < previousPosition.x)
+        {
+            direction = -1; // 왼쪽
+        }
+
+        // 현재 위치를 previousPosition에 저장
+        previousPosition = transform.position;
+
+        // 스프라이트 방향 업데이트
+        Vector3 currentScale = transform.localScale;
+        if (direction == -1) // 왼쪽
+        {
+            transform.localScale = new Vector3(Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
+        }
+        else // if(direction == 1) // 오른쪽
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
+        }
+    }
+
+
+
     private void Start()
     {
         net = GameObject.FindGameObjectWithTag("net").transform;
@@ -211,12 +248,14 @@ public class FishScript : MonoBehaviour
     private void Update()
     {
         // -z방향으로 이동
-
         var newZ = transform.position.z - speedZ * GameController.GetInstance().player.speedZ * Time.deltaTime;
         transform.position = new Vector3(transform.position.x, 0, newZ);
 
         // 특성에 따른 행동 구현
         PerformBehavior(fishIdx);
+
+        // 물고기 방향 관리
+        UpdateSpriteDirection();
     }
     void OnTriggerEnter(Collider other)
     {

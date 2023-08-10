@@ -320,7 +320,7 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   ObjectPrefabs:
-  - {fileID: 7918280023522824027, guid: 0f722e8a1e9fc3c44a1727bfe12431a2, type: 3}
+  - {fileID: 0}
   startTileIdx: 0
   preInstantiateNum: 3
 --- !u!95 &180068589
