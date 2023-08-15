@@ -230,7 +230,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.1835e-41, y: 0, z: 0, w: 3e-45}
+  m_BoundingSphereOverride: {x: 4.96e-43, y: 7.1e-44, z: 0, w: -25.69365}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 4286086714257024072, guid: a76c9f82dea24cc4d9957b716061f38f, type: 3}
   ObjectPrefabs:
-  - {fileID: 7918280023522824027, guid: df07013511b76d14388d124392769df0, type: 3}
+  - {fileID: 7918280023522824027, guid: d85d7beb08b744948b123430e7413af7, type: 3}
   startTileIdx: 0
   preInstantiateNum: 3
 --- !u!95 &180068589
@@ -1475,7 +1475,7 @@ MonoBehaviour:
   uiScript: {fileID: 1185377309}
   player: {fileID: 2122621192}
   tileGenerator: {fileID: 180068588}
-  fishData: {fileID: 1185377310}
+  objectData: {fileID: 1185377310}
   BGM: {fileID: 190517526}
   SE: {fileID: 1495592023}
   isAdventureMode: 0

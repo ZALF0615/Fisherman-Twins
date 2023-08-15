@@ -115,8 +115,9 @@ GameObject:
   - component: {fileID: 6819898843629405781}
   - component: {fileID: 2104249300097323436}
   - component: {fileID: 2161049260218805896}
+  - component: {fileID: 9114718431679680775}
   m_Layer: 0
-  m_Name: "2_\uC18C\uC6A9\uB3CC\uC774_1"
+  m_Name: "4_\uBC8C\uB808"
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,8 +132,8 @@ Transform:
   m_GameObject: {fileID: 7918280023522824027}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8116903753755494295}
   m_Father: {fileID: 0}
@@ -229,9 +230,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe90fc7e490e0b48b8d46d6d088fab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleIdx: 2
+  obstacleIdx: 4
   width: 0
   hitSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
+--- !u!95 &9114718431679680775
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7918280023522824027}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1cb574599dd2dec48ba9353a3d48f713, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8002719482904266308
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,11 +286,11 @@ RectTransform:
   m_Father: {fileID: 8116903753755494295}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 782, y: 698}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 200}
+  m_SizeDelta: {x: 488, y: 461}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8775725349051130798
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -298,7 +319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ffe7b4c66c0d15c41b1dc736379bfbbe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 504ebe60271345d439964ae76eaf228c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

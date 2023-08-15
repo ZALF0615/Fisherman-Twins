@@ -112,4 +112,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleIdx: 1
+  width: 0
   hitSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}

@@ -210,6 +210,18 @@ public class PlayerController : MonoBehaviour
             case 0: // 바위
                 Damage();
                 break;
+            case 2: // 소용돌이1
+                Damage();
+                break;
+            case 4: // 벌레
+                Damage();
+                break;
+            case 5: // 현무암바위
+                Damage();
+                break;
+            case 9: // 쇼용돌이2
+                Damage();
+                break;
             case 28: // 전기뱀장어 전기공격
                 Damage();
                 break;

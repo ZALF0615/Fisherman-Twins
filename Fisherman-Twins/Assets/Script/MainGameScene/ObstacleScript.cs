@@ -12,8 +12,21 @@ using System;
 public class ObstacleScript : MonoBehaviour
 {
     public int obstacleIdx;
+
+    public float width;
+
     public AudioClip hitSound;
     public Action func;
+
+    // fishIdx에 따른 물고기 특성 초기화
+    public void Initialize()
+    {
+        Dictionary<int, Obstacle> obstacleDataList = GameController.GetInstance().objectData.ObstacleList;
+        var obstacleData = obstacleDataList[obstacleIdx];
+
+        width = obstacleData.Width;
+        transform.localScale *= width;
+    }
 
     void OnTriggerEnter(Collider other)
     {

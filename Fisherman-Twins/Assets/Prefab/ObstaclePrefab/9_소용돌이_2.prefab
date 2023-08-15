@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 2161049260218805896}
   m_Layer: 0
   m_Name: "9_\uC18C\uC6A9\uB3CC\uC774_2"
-  m_TagString: Fish
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 7918280023522824027}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8116903753755494295}
@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleIdx: 9
+  width: 0
   hitSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
 --- !u!1 &8002719482904266308
 GameObject:
@@ -264,11 +265,11 @@ RectTransform:
   m_Father: {fileID: 8116903753755494295}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 782, y: 698}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8775725349051130798
 CanvasRenderer:
   m_ObjectHideFlags: 0
