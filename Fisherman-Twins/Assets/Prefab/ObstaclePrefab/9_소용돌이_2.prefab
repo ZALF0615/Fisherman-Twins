@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 2104249300097323436}
   - component: {fileID: 2161049260218805896}
   m_Layer: 0
-  m_Name: "2_\uC18C\uC6A9\uB3CC\uC774_1"
+  m_Name: "9_\uC18C\uC6A9\uB3CC\uC774_2"
   m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe90fc7e490e0b48b8d46d6d088fab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleIdx: 2
+  obstacleIdx: 9
   hitSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
 --- !u!1 &8002719482904266308
 GameObject:
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ffe7b4c66c0d15c41b1dc736379bfbbe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0fd2f18288c2af040b15c3060e624b77, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
