@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9052165365043940525}
   - component: {fileID: -2677096300623022925}
   m_Layer: 0
-  m_Name: rock
+  m_Name: "2_\uC18C\uC6A9\uB3CC\uC774_1"
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,5 +111,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe90fc7e490e0b48b8d46d6d088fab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleIdx: 0
+  obstacleIdx: 2
   hitSound: {fileID: 8300000, guid: dd321eeb47234e24f8060bd60029983f, type: 3}
