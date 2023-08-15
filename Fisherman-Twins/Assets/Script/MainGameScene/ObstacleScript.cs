@@ -36,6 +36,27 @@ public class ObstacleScript : MonoBehaviour
         }
     }
 
+    void MoveZ(float speedZ)
+    {
+        var newZ = transform.position.z - speedZ * GameController.GetInstance().player.speedZ * Time.deltaTime;
+        transform.position = new Vector3(transform.position.x, 0, newZ);
+    }
+
+    void PerformBehavior(int idx)
+    {
+        switch (idx)
+        {
+            case 8: // 빙어
+                MoveZ(3f);
+                break;
+        }
+    }
+
+    private void Update()
+    {
+        PerformBehavior(obstacleIdx);
+    }
+
 }
 
 
