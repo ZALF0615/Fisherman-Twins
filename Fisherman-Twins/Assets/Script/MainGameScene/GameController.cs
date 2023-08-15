@@ -44,7 +44,8 @@ public class GameController : MonoBehaviour
     public UIManager uiScript;
     public PlayerController player;
     public TileGenerator tileGenerator;
-    public FishData fishData;
+    
+    public ObjectData objectData;
 
     public AudioSource BGM;
     public AudioSource SE;

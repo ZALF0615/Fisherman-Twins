@@ -34,7 +34,7 @@ public class FishScript : MonoBehaviour
     // fishIdx에 따른 물고기 특성 초기화
     public void Initialize()
     {
-        Dictionary<int, Fish> fishList = GameController.GetInstance().fishData.FishList;
+        Dictionary<int, Fish> fishList = GameController.GetInstance().objectData.FishList;
         var fishData = fishList[fishIdx];
 
         isBad = fishData.IsBad;
