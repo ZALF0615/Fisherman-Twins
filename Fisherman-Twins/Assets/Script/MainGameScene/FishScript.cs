@@ -14,6 +14,10 @@ public class FishScript : MonoBehaviour
 
     public int fishIdx; // 물고기 인덱스
     public bool isBad; // 나쁜 물고기인지 여부
+    
+    public bool isAttracted = false;    // 떡밥에 이끌렸는지 여부
+
+    private GameController GC;
 
     [SerializeField]
 
@@ -191,7 +195,7 @@ public class FishScript : MonoBehaviour
     private void Start()
     {
         net = GameObject.FindGameObjectWithTag("net").transform;
-
+        GC = GameController.GetInstance();
         Initialize();
     }
     private void Update()
@@ -203,6 +207,17 @@ public class FishScript : MonoBehaviour
 
         // 특성에 따른 행동 구현
         PerformBehavior(fishIdx);
+
+        foreach(Item item in GC.itemController.passiveItems)
+        {
+            switch(item.idx)
+            {
+                case 1:
+                    if(!isBad)
+                        MoveTowardNet(10f, 10f, 10f);
+                    break;
+            }
+        }
     }
     void OnTriggerEnter(Collider other)
     {
