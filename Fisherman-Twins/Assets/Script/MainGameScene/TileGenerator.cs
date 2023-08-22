@@ -22,7 +22,7 @@ public class TileGenerator : MonoBehaviour
     public int preInstantiateNum; // 사전 인스턴스화 숫자
 
     List<GameObject> generatedTileList = new List<GameObject>(); // 생성된 타일 리스트
-    int currentTileIdx; // 현재 타일 인덱스
+    public int currentTileIdx; // 현재 타일 인덱스
 
     // 타일을 업데이트하는 함수
     // 주어진 인덱스까지 타일을 생성하고, 타일 리스트의 크기가 사전 인스턴스화 숫자보다 큰 경우 가장 오래된 타일을 제거

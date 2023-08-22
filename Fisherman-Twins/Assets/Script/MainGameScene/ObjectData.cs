@@ -5,7 +5,6 @@ using System;
 
 public class ObjectData : MonoBehaviour
 {
-    private const string SHEET_NAME = "FishData";
     public Dictionary<int, Fish> FishList = new Dictionary<int, Fish>();
     public Dictionary<int, Obstacle> ObstacleList = new Dictionary<int, Obstacle>();
 
@@ -15,7 +14,7 @@ public class ObjectData : MonoBehaviour
     }
     private void OnDataLoaded(string sheetName)
     {
-        if (sheetName == SHEET_NAME)
+        if (sheetName == "FishData")
         {
             ParseFishData();
         }
