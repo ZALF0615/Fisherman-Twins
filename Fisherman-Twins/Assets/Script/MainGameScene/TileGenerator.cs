@@ -24,6 +24,8 @@ public class TileGenerator : MonoBehaviour
     List<GameObject> generatedTileList = new List<GameObject>(); // 생성된 타일 리스트
     public int currentTileIdx; // 현재 타일 인덱스
 
+    public int currentPhaseIdx; // 현재 단계(페이즈) 번호 
+
     // 타일을 업데이트하는 함수
     // 주어진 인덱스까지 타일을 생성하고, 타일 리스트의 크기가 사전 인스턴스화 숫자보다 큰 경우 가장 오래된 타일을 제거
     // 이 방식으로 게임이 진행됨에 따라 신규 타일이 생성되고 오래된 타일이 제거되어 전체 타일 수를 일정하게 유지
@@ -129,6 +131,14 @@ public class TileGenerator : MonoBehaviour
         if (charaPositionIdx + preInstantiateNum > currentTileIdx)
         {
             UpdateTile(charaPositionIdx + preInstantiateNum);
+
+            // 현재 페이즈 인덱스 갱신
+
+            int stageUnitSize = 3; // 한 페이즈가 몇 개의 타일로 구성되는지
+            currentPhaseIdx = (currentTileIdx - 1) / stageUnitSize;
+
         }
+
+
     }
 }
