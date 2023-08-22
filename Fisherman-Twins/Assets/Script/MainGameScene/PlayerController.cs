@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     Animator anim_boat2; // 플레이어 2의 보트 애니메이션
 
     public float speedX = 15; // 플레이어의 x축 이동 속도
-    public float speedZ = 20; // 플레이어의 z축 이동 속도
+    public float speedZ = 6; // 플레이어의 z축 이동 속도
 
     public int gold_total; // 총 골드 양
     public int gold_net; // 현재 그물에 잡힌 골드 양
@@ -284,6 +284,14 @@ public class PlayerController : MonoBehaviour
         if (isInitialized) { return; }
 
         net_left = DEFAULT_NET_NUM;
+
+        // speedZ 조정
+
+        int secondPerTile = 10; // 한 타일 당 몇 초가 걸리는지
+
+
+        speedZ = Constants.BLOCK_SIZE / secondPerTile;
+
         isInitialized = true;
     }
 
@@ -298,6 +306,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         // 플레이어 z방향으로 전진
         var newZ = playerParent.transform.position.z + speedZ * Time.deltaTime;
         playerParent.transform.position = new Vector3(0, 0, newZ);

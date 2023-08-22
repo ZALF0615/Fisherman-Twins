@@ -134,7 +134,7 @@ public class TileGenerator : MonoBehaviour
 
             // 현재 페이즈 인덱스 갱신
 
-            int stageUnitSize = 3; // 한 페이즈가 몇 개의 타일로 구성되는지
+            int stageUnitSize = 3; // 한 페이즈가 몇 개의 타일로 구성되는지, 나중에 패러미터로 추가?
             currentPhaseIdx = (currentTileIdx - 1) / stageUnitSize;
 
         }
