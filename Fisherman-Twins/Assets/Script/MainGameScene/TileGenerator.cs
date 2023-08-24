@@ -9,6 +9,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Constants;
+using System.Linq;
+using System.Text;
 
 public class TileGenerator : MonoBehaviour
 {
@@ -68,28 +70,84 @@ public class TileGenerator : MonoBehaviour
         // 생성된 타일의 부모를 tileParent로 설정
         tileObj.transform.SetParent(tileParent);
 
+        // 페이즈 인덱스 계산
+        int phaseIdx = tileIdx - 1;
+
+        print($"phaseIdx:{phaseIdx}, tileIdx:{tileIdx}");
+
         // 물고기 생성
         if (tileIdx > 1 && GameController.GetInstance().isGameOngoing)
         {
-            int fishNum = Random.Range(10, 20);
+            int currentStage = 1; // 임시값
 
-            // 각 물고기에 대해
-            for (int i = 0; i < fishNum; i++)
+            StringBuilder logBuilder = new StringBuilder(); // 로그 문자열을 만들기 위한 StringBuilder
+
+            // 현재 스테이지에 귀속된 물고기 프리팹만 가져옴
+            List<GameObject> stageFishPrefabs = ObjectPrefabs.Where(fishPrefab =>
             {
-                // 물고기 프리팹 배열에서 랜덤하게 물고기를 선택
-                int fishIdx = Random.Range(0, ObjectPrefabs.Length);
+                FishScript fishScript = fishPrefab.GetComponent<FishScript>();
 
-                // 물고기의 위치를 랜덤하게 설정 (강의 폭과 타일의 크기에 따라)
-                var posX = Random.Range(FISH_MARGIN - RIVER_WIDTH / 2.0f, RIVER_WIDTH / 2.0f - FISH_MARGIN);
-                var posZ = Random.Range(BLOCK_SIZE / -2.0f, BLOCK_SIZE / 2.0f);
+                if (fishScript == null) // FishScript가 없을 경우 -> 물고기 떼
+                {
+                    Transform child = fishPrefab.transform.GetChild(0); // 첫 번째 자식
+                    for (int i = 0; i < fishPrefab.transform.childCount; i++)
+                    {
+                        fishScript = child.GetComponent<FishScript>();
+                        if (fishScript != null)
+                            break; // FishScript를 가진 첫 번째 자식을 찾았으므로 loop 탈출
+                        child = fishPrefab.transform.GetChild(i); // 다음 자식으로 이동
+                    }
+                }
 
-                // 선택된 물고기 프리팹을 인스턴스화하여 물고기 오브젝트를 생성
-                var fish = (GameObject)Instantiate(ObjectPrefabs[fishIdx]);
-                // 생성된 물고기의 부모를 방금 생성된 타일으로 설정
-                fish.transform.SetParent(tileObj.transform);
-                // 생성된 물고기의 위치를 설정
-                fish.transform.localPosition = new Vector3(posX, 0, posZ);
+                int fishIdx = fishScript.fishIdx;  // 물고기의 idx 가져오기
+                FishData fishData = GameController.GetInstance().objectData.FishDataList[fishIdx]; // 해당 idx의 FishData 가져오기
+                return fishData.StageIdx == currentStage;  // 현재 스테이지와 물고기의 StageBound가 일치하는지 확인
+            }).ToList();
+
+            // stageFishPrefabs 내의 프리팹 이름들을 출력
+            // string prefabNames = string.Join(", ", stageFishPrefabs.Select(prefab => prefab.name));
+            // print(prefabNames);
+
+            logBuilder.AppendLine($"Current Stage: {currentStage} | Tile Index: {tileIdx}");
+
+
+            // 추린 각각의 물고기에 대해
+            foreach (var fishPrefab in stageFishPrefabs)
+            {
+                FishScript fishScript = fishPrefab.GetComponent<FishScript>();
+                int fishIdx, totalFishCountForCurrentPhase;
+
+                // 물고기 떼인 경우
+                if (fishScript == null)
+                {
+                    var schoolFish = fishPrefab.transform.GetChild(0).GetComponent<FishScript>(); // 첫 번째 물고기로부터 정보 가져오기
+                    int schoolFishCount = fishPrefab.transform.childCount; // 물고기 떼 내의 물고기 수
+
+                    fishIdx = schoolFish.fishIdx;
+                    FishData fishData = GameController.GetInstance().objectData.FishDataList[fishIdx];
+                    totalFishCountForCurrentPhase = fishData.PhaseCounts[phaseIdx - 1] / schoolFishCount; // 현재 페이즈에서의 해당 물고기의 총 생성 수
+                }
+                else // 개별 물고기인 경우
+                {
+                    fishIdx = fishScript.fishIdx;
+                    FishData fishData = GameController.GetInstance().objectData.FishDataList[fishIdx];
+                    totalFishCountForCurrentPhase = fishData.PhaseCounts[phaseIdx - 1];
+                }
+
+                for (int i = 0; i < totalFishCountForCurrentPhase; i++)
+                {
+                    var posX = UnityEngine.Random.Range(FISH_MARGIN - RIVER_WIDTH / 2.0f, RIVER_WIDTH / 2.0f - FISH_MARGIN);
+                    var posZ = UnityEngine.Random.Range(BLOCK_SIZE / -2.0f, BLOCK_SIZE / 2.0f);
+
+                    var fish = (GameObject)Instantiate(fishPrefab);
+                    fish.transform.SetParent(tileObj.transform);
+                    fish.transform.localPosition = new Vector3(posX, 0, posZ);
+
+                    logBuilder.AppendLine($"Fish Prefab: {fishPrefab.name} | Created at Position: ({posX}, 0, {posZ})");
+                }
             }
+
+            print(logBuilder.ToString());  // 로그 출력
         }
 
         // 생성된 타일 오브젝트를 반환
@@ -120,10 +178,12 @@ public class TileGenerator : MonoBehaviour
     }
 
     // 게임이 시작될 때 Constants가 로드된 뒤에 Init 함수를 호출
-    private void Awake() { Constants.OnConstantsLoaded += Init; }
+    private void Awake() { ObjectData.OnFishDataParsed += Init; }
 
     void Update()
     {
+        // if (!isInitialized) { return; }
+
         // 플레이어의 현재 위치를 기반으로 캐릭터 위치 인덱스를 계산
         int charaPositionIdx = (int)(player.position.z / BLOCK_SIZE);
 
@@ -131,14 +191,6 @@ public class TileGenerator : MonoBehaviour
         if (charaPositionIdx + preInstantiateNum > currentTileIdx)
         {
             UpdateTile(charaPositionIdx + preInstantiateNum);
-
-            // 현재 페이즈 인덱스 갱신
-
-            int stageUnitSize = 3; // 한 페이즈가 몇 개의 타일로 구성되는지, 나중에 패러미터로 추가?
-            currentPhaseIdx = (currentTileIdx - 1) / stageUnitSize;
-
         }
-
-
     }
 }

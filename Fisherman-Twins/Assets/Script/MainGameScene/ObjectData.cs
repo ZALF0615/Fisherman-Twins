@@ -5,13 +5,16 @@ using System;
 
 public class ObjectData : MonoBehaviour
 {
-    public Dictionary<int, Fish> FishList = new Dictionary<int, Fish>();
+    public Dictionary<int, FishData> FishDataList = new Dictionary<int, FishData>();
+    public Dictionary<int, int> PhaseFishCounts = new Dictionary<int, int>(); // 각 단계별 총 물고기 수량
+
     public Dictionary<int, Obstacle> ObstacleList = new Dictionary<int, Obstacle>();
 
     private void Awake()
     {
         DataLoader.OnDataLoaded += OnDataLoaded;
     }
+
     private void OnDataLoaded(string sheetName)
     {
         if (sheetName == "FishData")
@@ -20,16 +23,8 @@ public class ObjectData : MonoBehaviour
         }
     }
 
-    void ParseData(string sheetName)
-    {
-        switch (sheetName)
-        {
-            case "FishData":
-                ParseFishData();
-                break;
-        }
-    }
-
+    public delegate void FishDataParsedHandler();
+    public static event FishDataParsedHandler OnFishDataParsed;
     public void ParseFishData()
     {
         print("LoadFishData");
@@ -66,12 +61,35 @@ public class ObjectData : MonoBehaviour
             if (!float.TryParse(columns[columnIndexes["너비"]], out float width)) { width = 0; }
             if (!float.TryParse(columns[columnIndexes["속도"]], out float speedZ)) { speedZ = 0; }
 
-            var fish = new Fish(idx, name, isBad, weight, price, width, speedZ);
 
-            FishList.Add(idx, fish);
+            // 각 단계(Phase)별 등장 개수 데이터 처리
+
+            int[] phaseCounts = new int[6]; // 6단계까지의 물고기 수량
+
+            for (int phase = 0; phase < 6; phase++)
+            {
+                int.TryParse(columns[columnIndexes["1단계"] + phase], out phaseCounts[phase]);
+
+                // 현재 단계의 물고기 수량을 누적
+                if (!PhaseFishCounts.ContainsKey(phase + 1))
+                {
+                    PhaseFishCounts[phase + 1] = 0;
+                }
+                PhaseFishCounts[phase + 1] += phaseCounts[phase];
+            }
+
+            // 등장 스테이지 번호 처리
+
+            int.TryParse(columns[columnIndexes["등장스테이지"]], out int stageIdx);
+
+            var fishData = new FishData(idx, name, isBad, weight, price, width, speedZ, phaseCounts, stageIdx);
+            FishDataList.Add(idx, fishData);
         }
 
-        // DisplayAllFishData();
+        DisplayAllFishData();
+
+        // 모든 FishData가 파싱된 후에 이벤트 발생
+        OnFishDataParsed?.Invoke();
     }
     public void ParseObstacleData()
     {
@@ -114,14 +132,15 @@ public class ObjectData : MonoBehaviour
     public void DisplayAllFishData()
     {
         // 헤더 구성
-        string csvHeader = "Idx,Name,IsBad,Weight,Price,Width,SpeedZ";
+        string csvHeader = "Idx,Name,IsBad,Weight,Price,Width,SpeedZ,StageIdx,Phase1,Phase2,Phase3,Phase4,Phase5,Phase6";
         List<string> csvRows = new List<string> { csvHeader };
 
         // 각 레코드를 CSV 형식의 행으로 변환
-        foreach (var fishEntry in FishList)
+        foreach (var fishEntry in FishDataList)
         {
-            Fish fish = fishEntry.Value;
-            string csvRow = $"{fish.Idx},{fish.Name},{fish.IsBad},{fish.Weight},{fish.Price},{fish.Width},{fish.SpeedZ}";
+            FishData fish = fishEntry.Value;
+            string phaseCountsStr = string.Join(",", fish.PhaseCounts); // 각 단계별 수량을 콤마로 구분
+            string csvRow = $"{fish.Idx},{fish.Name},{fish.IsBad},{fish.Weight},{fish.Price},{fish.Width},{fish.SpeedZ},{fish.StageIdx},{phaseCountsStr}";
             csvRows.Add(csvRow);
         }
 
@@ -130,23 +149,24 @@ public class ObjectData : MonoBehaviour
         Debug.Log(csvOutput);
     }
 
+
 }
 
-public class Fish{
+public class FishData{
+
     public int Idx;
     public string Name;
-
     public bool IsBad;
-
     public float Weight;
     public int Price;
-
     public float Width;
     public float SpeedZ;
 
+    public int StageIdx; // 이 물고기가 귀속된 스테이지
+    public int[] PhaseCounts;
     // public Action Behaviour;
 
-    public Fish(int idx, string name, bool isBad, float weight, int price, float width, float speedZ)
+    public FishData(int idx, string name, bool isBad, float weight, int price, float width, float speedZ, int[] phaseCounts, int stageIdx)
     {
         Idx = idx;
         Name = name;
@@ -155,12 +175,16 @@ public class Fish{
         Price = price;
         Width = width;
         SpeedZ = speedZ;
+        PhaseCounts = phaseCounts;
+        StageIdx = stageIdx;
     }
 
     public override string ToString()
     {
-        return $"Idx: {Idx}, Name: {Name}, IsBad: {IsBad}, Weight: {Weight}, Price: {Price}, Width: {Width}, SpeedZ: {SpeedZ}";
+        string phaseCountsStr = $"PhaseCounts: [{string.Join(", ", PhaseCounts)}]";
+        return $"Idx: {Idx}, Name: {Name}, IsBad: {IsBad}, Weight: {Weight}, Price: {Price}, Width: {Width}, SpeedZ: {SpeedZ}, {phaseCountsStr}";
     }
+
 
 }
 public class Obstacle

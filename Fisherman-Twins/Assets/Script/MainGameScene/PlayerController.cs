@@ -287,10 +287,8 @@ public class PlayerController : MonoBehaviour
 
         // speedZ 조정
 
-        int secondPerTile = 10; // 한 타일 당 몇 초가 걸리는지
-
-
-        speedZ = Constants.BLOCK_SIZE / secondPerTile;
+        int secondPerTile = 30; // 한 타일(단계) 당 몇 초가 걸리는지
+        speedZ = Constants.BLOCK_SIZE / secondPerTile; // 60 / 10 = 6
 
         isInitialized = true;
     }
