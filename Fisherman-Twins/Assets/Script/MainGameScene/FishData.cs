@@ -61,7 +61,7 @@ public class FishData : MonoBehaviour
             FishList.Add(idx, fish);
         }
 
-        // DisplayAllFishData();
+        //DisplayAllFishData();
     }
     public void DisplayAllFishData()
     {
@@ -71,7 +71,7 @@ public class FishData : MonoBehaviour
 
         // 각 레코드를 CSV 형식의 행으로 변환
         foreach (var fishEntry in FishList)
-        {
+        {   
             Fish fish = fishEntry.Value;
             string csvRow = $"{fish.Idx},{fish.Name},{fish.IsBad},{fish.Weight},{fish.Price},{fish.Width},{fish.SpeedZ}";
             csvRows.Add(csvRow);
@@ -108,6 +108,7 @@ public class Fish{
         Width = width;
         SpeedZ = speedZ;
     }
+
 
     public override string ToString()
     {

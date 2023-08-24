@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
 
     public UIManager uiScript;
     public PlayerController player;
+    public ItemController itemController;
     public TileGenerator tileGenerator;
     public FishData fishData;
 
@@ -99,4 +100,5 @@ public class GameController : MonoBehaviour
             GameStart(); // 게임 바로 시작
         }
     }
+
 }
